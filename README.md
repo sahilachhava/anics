@@ -1,2 +1,2 @@
-# anics
+# Anics
 Anics is clone of Netflix
