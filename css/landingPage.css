@@ -220,16 +220,16 @@ img {
 
 /* Custom Footer */
 
-.customFooter {
-    background-color: var(--dark-color);
-    height: 50px;
+.bottom{
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #757575;
+    
 }
 
-.customFooter p {
-    color: white;
-    font-size: large;
-    text-align: center;
-    margin-top: -5px;
+.bottom-width{
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 17px;
 }
 
 /* Footer */
