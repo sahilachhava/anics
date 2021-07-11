@@ -15,7 +15,7 @@ const warningCPassword = document.getElementById("warningCPassword")
 
 const inputOnBlur = (ev) =>{
     if(inputTouched.email){
-        if(!validateEmail(inputEmail.value) && !validatePhone(inputEmail.value)){
+        if(!validateEmail(inputEmail.value)){
             warningEmail.style.display="block"
             inputEmail.style.borderBottom='2px solid #e87c03'
         }
