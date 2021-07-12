@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/login.css">
+    <title>Anics - Watch Anime & Movies Online</title>
+    
+</head>
+<body>
+    <div style="background-color: rgba(0, 0, 0, 0.6);padding-bottom: 343px;">
+        <div class="logo">
+            <a href="index.html">
+                <img src="img/logo.png" class="img-logo"/>
+            </a>
+        </div>
+        <div class="login-div">
+            <form class="login" onsubmit="resetPassword();return false;">
+                <h1>Reset password</h1>
+                <div class="input-text">
+                    <input type="text" id="inputEmail" name="email" placeholder="Registered Email" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)" required/>
+                    <div class="warning-input" id="warningEmail">
+                        Please enter a valid email.
+                    </div>
+                </div>
+            
+                <div>
+                    <button type="submit" class="signin-button">Reset Password</button>
+                </div>
+
+                <div class="remember-flex">
+                    
+                </div>
+                
+                <div class="new-members" style="margin-top: 20px;">
+                    Want to login? <a href="login.html" class="signup-link">Login now</a>.
+                </div>
+                <div class="protection color_link help">
+                
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
+    <script src="commander/assets/firebase.js"></script>
+</body>
+    <script>
+        function resetPassword(){
+            var uEmail = document.getElementById('inputEmail').value;
+
+            auth.sendPasswordResetEmail(uEmail).then(function() {
+                alert('Success: Password Reset email is sent to your registered email');
+                window.location.href = "login.html";
+            }).catch(function(error) {
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorCode + " -> " + errorMessage);
+            });
+        }   
+    </script>
+</html>

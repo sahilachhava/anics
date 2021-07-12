@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/login.css">
     <title>Anics - Watch Anime & Movies Online</title>
-    
 </head>
 <body>
     <div class="upper">
@@ -18,38 +17,40 @@
             </a>
         </div>
         <div class="login-div">
-            <form class="login">
+            <div class="login">
+            <form onsubmit="signUp();return false;">
                 <h1>Sign Up</h1>
                 <div class="input-text">
-                    <input type="text" id="inputEmail" name="email" placeholder="Email" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)"/>
+                    <input type="email" id="inputEmail" placeholder="Email" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)" required/>
                     <div class="warning-input" id="warningEmail">
                         Please enter a valid email.
                     </div>
                 </div>
                 
                 <div class="input-text">
-                    <input type="password" id="inputPassword" name="password" placeholder="Password" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)"/>
+                    <input type="password" id="inputPassword" placeholder="Password" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)" required/>
                     <div class="warning-input" id="warningPassword">
                         Your password must contain between 4 and 60 characters.
                     </div>
                 </div>
 
                 <div class="input-text">
-                    <input type="password" id="cinputPassword" name="cpassword" placeholder="Confirm Password" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)"/>
+                    <input type="password" id="cinputPassword" placeholder="Confirm Password" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)" required/>
                     <div class="warning-input" id="warningCPassword">
                         Password not matched, Please try again.
                     </div>
                 </div>
                 
                 <div>
-                    <button class="signin-button">Sign Up</button>
+                    <button type="submit" class="signin-button">Sign Up</button>
                 </div>
+            </form>
 
                 <div class="google-btn">
                     <table>
                         <tr>
                             <td><img src="img/google-logo.png" /></td>
-                            <td><a href="#">Sign Up with Google</a></td>
+                            <td><a onclick="continueWithGoogle();">Sign Up with Google</a></td>
                         </tr>
                     </table>
                 </div>
@@ -60,10 +61,67 @@
                 <div class="protection color_link help">
                 
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 
     <script src="js/login.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
+    <script src="commander/assets/firebase.js"></script>
 </body>
+<script>
+    function signUp(){
+        var uEmail = document.getElementById('inputEmail').value;
+        var uPass = document.getElementById('inputPassword').value;
+        var uCPass = document.getElementById('cinputPassword').value;
+        var expiryDate = new Date(firebase.firestore.Timestamp.now().toDate());
+        expiryDate.setUTCMonth(expiryDate.getUTCMonth() + 1);
+        
+        if(uPass == uCPass){
+            auth.createUserWithEmailAndPassword(uEmail, uPass).then(function(){
+                var user = auth.currentUser;
+                alert('Email Verification sent, Please verify your email');
+                user.sendEmailVerification().then(function() {
+                    db.collection("users").doc(user.uid).set({
+                        'email': uEmail,
+                        'membership': {
+                           'type': 'Basic',
+                           'expiryDate': expiryDate
+                        },
+                        'status': 'Active',
+                        'profiles': '0'
+                    }).then(()=>{
+                        window.location.href = "login.html";
+                    });
+                });
+            }).catch(function(error){
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                alert(errorCode + " -> " + errorMessage);
+            });
+        }else{
+            alert("Error: Password Not Macthed, Please try again!");
+        }
+    }
+
+    function continueWithGoogle(){
+        var provider = new firebase.auth.GoogleAuthProvider();
+
+        auth.signInWithPopup(provider).then(function(result) {
+            var user = result.user;
+            var token = result.credential.accessToken;
+            localStorage.setItem('userUID', user.uid);
+            localStorage.setItem('loginStatus', '1');
+            window.location.href = "index.html";
+        }).catch(function(error){
+            var errorCode = error.code;
+            var errorMessage = error.message;
+            alert(errorCode + " -> " + errorMessage);
+        });
+    }
+</script>
 </html>
