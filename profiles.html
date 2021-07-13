@@ -41,7 +41,7 @@
         await db.collection("users").doc(userID).collection("profiles").get().then(function(snapSnot){
             snapSnot.forEach((profile)=>{
                 addIcon.insertAdjacentHTML('beforebegin', (
-                    `<button id="${profile.id}" class="btn"><span>${profile.id}</span><div onclick="deleteProfile('${profile.id}');" class="closeBtn" hidden></div></button>`
+                    `<button id="${profile.id}" class="btn" style="background-image: url(img/avatars/${profile.data().avatar});" onclick="openProfile('${profile.id}');"><span>${profile.id}</span><div onclick="deleteProfile('${profile.id}');" class="closeBtn" hidden></div></button>`
                 ))
                 var userCount = $('.memberDiv button').length;
                 if(userCount == 5){
@@ -64,10 +64,11 @@
                             });
                             await doc.ref.collection("profiles").doc(userName).set({
                                 'name': userName,
-                                'myList': []
+                                'myList': [],
+                                'avatar': "avatar"+(profileCount+1)+".png",
                             });
                             addIcon.insertAdjacentHTML('beforebegin', (
-                                `<button id="${userName}" class="btn"><span>${userName}</span><div onclick="deleteProfile('${userName}');" class="closeBtn" hidden></div></button>`
+                                `<button id="${userName}" class="btn" style="background-image: url(img/avatars/avatar${profileCount+1}.png);" onclick="openProfile('${userName}');"><span>${userName}</span><div onclick="deleteProfile('${userName}');" class="closeBtn" hidden></div></button>`
                             ))
                             var userCount = $('.memberDiv button').length;
                             if(userCount == 5){
@@ -95,10 +96,12 @@
             }else{
                 $('.addIcon').removeAttr('hidden');
             }
+            $('.btn').removeAttr('disabled');
         }else{
             $('.closeBtn').removeAttr('hidden');
             $('.addIcon').attr('hidden', 'hidden');
             $('.manageProfile').text("Save Changes");
+            $('.btn').attr('disabled', 'true');
         }
     });
     userIcons()
@@ -116,6 +119,19 @@
                     });
                 }
             })
+        }
+    }
+
+    function openProfile(profileID){
+        if(profileID != ""){
+            db.collection("users").doc(userID).collection("profiles").doc(profileID).get().then((doc)=>{
+                var myList = doc.data().myList;
+                localStorage.setItem("userProfile", doc.id);
+                localStorage.setItem("avatar", doc.data().avatar);
+                localStorage.setItem("userList", myList);
+            }).then(()=>{
+                window.location.href = "home.html";
+            });
         }
     }
 </script>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.png">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/global.css" />
+    <link rel="stylesheet" href="css/home.css" />
+    <title>Anics - Watch Anime & Movies Online</title>
+</head>
+<body>
+    <header class="w-10">
+        <nav id="menu" class="navbar navbar-expand-lg navbar-light bg-home navbar-inverse navbar-fixed-top ">
+            <div class="container">
+                <a href="" class="navbar-brand">Anics</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <span class=""><i class="bi bi-list" style="color: #e50914; font-size: 25px;"></i></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Anime</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Movies</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">My List</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav flex-row flex-wrap ms-md-auto" style="vertical-align: middle;">
+                        <li class="nav-item col-6 col-md-auto">
+                            <a class="nav-link" href="#">
+                                <img src="img/icons/search.svg" style="width: 22px;margin-right: 25px;
+                                color: white;" alt="search icon">
+                            </a>
+                        </li>
+                        <li class="col-6 col-md-auto" style="margin-top: 5px;">
+                            <div class="profileDropdown">
+                                <img class="currentProfileIcon" src="img/avatars/avatar1.png" alt="" width="30" height="30"
+                                style="border-radius: 5px;margin-right: 6px; vertical-align: middle;">
+                                <img class="arrowIcon" src="img/icons/arrow.png" />
+
+                                <div class="profileDropdown-content">
+                                    <div class="profile-links">
+                                        <a href="profiles.html" class="profile-item last" >Manage Profiles</a>
+                                    </div>
+
+                                    <div class="line"></div>
+
+                                    <div class="other-links">
+                                        <a href="#">Account</a>
+                                        <a href="#">Suggest us</a>
+                                        <a onclick="userLogout();" style="cursor: pointer;">Sign out of Anics</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+        crossorigin="anonymous"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
+    <script src="js/global.js"></script>
+    <script src="commander/assets/firebase.js"></script>
+</body>
+<script>
+    const userID = localStorage.getItem("userUID");
+    const loginStatus = localStorage.getItem("loginStatus");
+    const currentProfile = localStorage.getItem("userProfile");
+    const avatar = localStorage.getItem("avatar");
+
+    if(loginStatus != "1" || userID == null){
+        window.location.href = "login.html";
+    }else if(currentProfile == null){
+        window.location.href = "profiles.html";
+    }else{
+        $('.currentProfileIcon').attr('src', 'img/avatars/'+avatar);
+        const profiles = document.querySelector('.profile-links');
+
+        db.collection("users").doc(userID).collection("profiles").get().then((snapShot)=>{
+            var count = 1;
+            snapShot.forEach((doc)=>{
+                if(doc.id != currentProfile){
+                    profiles.insertAdjacentHTML('afterbegin', (
+                        '<a onclick="openProfile(`'+doc.id+'`)" class="profile-item d-flex flex-middle">'+
+                            '<img src="img/avatars/'+doc.data().avatar+'" alt="icon" class="user-icon">'+
+                            '<span>'+doc.id+'</span>'+
+                        '</a>'
+                    ));
+                }
+                count++;
+            })
+        })
+    }
+
+    function openProfile(profileID){
+        if(profileID != ""){
+            db.collection("users").doc(userID).collection("profiles").doc(profileID).get().then((doc)=>{
+                var myList = doc.data().myList;
+                localStorage.setItem("userProfile", doc.id);
+                localStorage.setItem("avatar", doc.data().avatar);
+                localStorage.setItem("userList", myList);
+            }).then(()=>{
+                window.location.href = "home.html";
+            });
+        }
+    }
+</script>
+</html>
