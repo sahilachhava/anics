@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/favicon.png">
+    <title>Anics - Watch Anime & Movies Online</title>
+    <link rel="stylesheet" href="css/profiles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" integrity="sha512-BnbUDfEUfV0Slx6TunuB042k9tuKe3xrD6q4mg5Ed72LTgzDIcLPxg6yI2gcMFRyomt+yJJxE+zJwNmxki6/RA==" crossorigin="anonymous" />
+</head>
+<body>
+    <div class="whoIsWatching"> 
+        <nav class="logo-section">
+            <img src="img/logo.png" alt="logo">
+        </nav>
+        
+        <div class="main-div">
+            <h1>Who's watching?</h1>
+            <div class="memberDiv">
+                <button class="addIcon"><i class="fas fa-plus-circle"></i><span>Add Profile</span></button>
+            </div>
+            <button id="manageProfile" class="manageProfile">Manage Profiles</button>
+        </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
+    <script src="commander/assets/firebase.js"></script>
+</body>
+<script>
+    const memberDiv = document.querySelector('.memberDiv')
+    const addIcon = document.querySelector('.addIcon')
+    const manageProfile = document.querySelector('.manageProfile')
+    const userID = localStorage.getItem('userUID');
+    
+    const userIcons = async () => {
+        await db.collection("users").doc(userID).collection("profiles").get().then(function(snapSnot){
+            snapSnot.forEach((profile)=>{
+                addIcon.insertAdjacentHTML('beforebegin', (
+                    `<button id="${profile.id}" class="btn"><span>${profile.id}</span><div onclick="deleteProfile('${profile.id}');" class="closeBtn" hidden></div></button>`
+                ))
+                var userCount = $('.memberDiv button').length;
+                if(userCount == 5){
+                    $('.addIcon').attr('hidden', 'true');
+                }
+            })
+        });
+    }
+    addIcon.addEventListener('click', async () => {
+        let userName = prompt('Please enter your name')
+
+        if(userName !== null){
+            await db.collection("users").doc(userID).collection("profiles").doc(userName).get().then(async (doc)=>{
+                if(!doc.exists){
+                    await db.collection("users").doc(userID).get().then(async function(doc){
+                        var profileCount = parseInt(doc.data().profiles);
+                        if(profileCount < 4){
+                            await doc.ref.update({
+                                'profiles': profileCount+1,
+                            });
+                            await doc.ref.collection("profiles").doc(userName).set({
+                                'name': userName,
+                                'myList': []
+                            });
+                            addIcon.insertAdjacentHTML('beforebegin', (
+                                `<button id="${userName}" class="btn"><span>${userName}</span><div onclick="deleteProfile('${userName}');" class="closeBtn" hidden></div></button>`
+                            ))
+                            var userCount = $('.memberDiv button').length;
+                            if(userCount == 5){
+                                $('.addIcon').attr('hidden', 'true');
+                            }
+                        }else{
+                            alert("You can create only 4 profiles");
+                        }
+                    });
+                }else{
+                    alert("Username already exists! Please try again with diffrent username");
+                }
+            })
+        } else{
+            alert('Please enter username or username already exists!')
+        }
+    })
+    manageProfile.addEventListener('click', () => {
+        if($('.manageProfile').text() == "Save Changes"){
+            $('.closeBtn').attr('hidden', 'hidden');
+            $('.manageProfile').text("Manage Profiles");
+            var userCount = $('.memberDiv button').length;
+            if(userCount == 5){
+                $('.addIcon').attr('hidden', 'true');
+            }else{
+                $('.addIcon').removeAttr('hidden');
+            }
+        }else{
+            $('.closeBtn').removeAttr('hidden');
+            $('.addIcon').attr('hidden', 'hidden');
+            $('.manageProfile').text("Save Changes");
+        }
+    });
+    userIcons()
+
+    function deleteProfile(profileID){
+        if(confirm("Remove profile " + profileID + "?")){
+            db.collection("users").doc(userID).get().then(async (doc)=>{
+                if(doc.exists){
+                    const profileCount = parseInt(doc.data().profiles);
+                    await doc.ref.update({
+                        'profiles': profileCount-1,
+                    });
+                    await doc.ref.collection("profiles").doc(profileID).delete().then(()=>{
+                        $('#'+profileID).remove();
+                    });
+                }
+            })
+        }
+    }
+</script>
+</html>

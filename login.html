@@ -68,6 +68,7 @@
     </div>
 
     <script src="js/login.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-auth.js"></script>
@@ -85,7 +86,7 @@
                 if(user.emailVerified){
                     localStorage.setItem('userUID', user.uid);
                     localStorage.setItem('loginStatus', '1');
-                    window.location.href = "index.html";
+                    window.location.href = "profiles.html";
                 }else{
                     user.sendEmailVerification().then(function() {
                         alert('Email Verification sent again, Please verify your email');
@@ -104,18 +105,41 @@
 
         function continueWithGoogle(){
             var provider = new firebase.auth.GoogleAuthProvider();
+            var expiryDate = new Date(firebase.firestore.Timestamp.now().toDate());
+            expiryDate.setUTCMonth(expiryDate.getUTCMonth() + 1);
 
             auth.signInWithPopup(provider).then(function(result) {
                 var user = result.user;
                 var token = result.credential.accessToken;
-                localStorage.setItem('userUID', user.uid);
-                localStorage.setItem('loginStatus', '1');
-                window.location.href = "index.html";
+                db.collection("users").doc(user.uid).set({
+                    'email': user.email,
+                    'membership': {
+                        'type': 'Basic',
+                        'expiryDate': expiryDate
+                    },
+                    'status': 'Active',
+                    'profiles': '0'
+                }).then(()=>{
+                    localStorage.setItem('userUID', user.uid);
+                    localStorage.setItem('loginStatus', '1');
+                    window.location.href = "profiles.html";
+                });
             }).catch(function(error){
                 var errorCode = error.code;
                 var errorMessage = error.message;
                 alert(errorCode + " -> " + errorMessage);
             });
         }
+
+        $(document).ready(async function() {
+            if(localStorage.getItem('loginStatus')=='1'){
+                const userID = localStorage.getItem("userUID");
+                await db.collection("users").doc(userID).get().then((doc)=>{
+                    if(doc.exists){
+                        window.location.href = "profiles.html";
+                    }
+                })
+            }
+        });
     </script>
 </html>
