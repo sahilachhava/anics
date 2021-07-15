@@ -30,7 +30,7 @@
                 <div class="input-text">
                     <input type="password" id="inputPassword" name="password" placeholder="Password" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)" required/>
                     <div class="warning-input" id="warningPassword">
-                        Your password must contain between 4 and 60 characters.
+                        Your password must contain between 6 and 60 characters.
                     </div>
                 </div>
                 
@@ -85,6 +85,7 @@
                 var user = auth.currentUser;
                 if(user.emailVerified){
                     localStorage.setItem('userUID', user.uid);
+                    localStorage.setItem('userEmail', user.email);
                     localStorage.setItem('loginStatus', '1');
                     window.location.href = "profiles.html";
                 }else{
@@ -121,6 +122,7 @@
                     'profiles': '0'
                 }).then(()=>{
                     localStorage.setItem('userUID', user.uid);
+                    localStorage.setItem('userEmail', user.email);
                     localStorage.setItem('loginStatus', '1');
                     window.location.href = "profiles.html";
                 });

@@ -30,7 +30,7 @@
                 <div class="input-text">
                     <input type="password" id="inputPassword" placeholder="Password" onfocus="inputOnFocus(this)" onblur="inputOnBlur(this)" required/>
                     <div class="warning-input" id="warningPassword">
-                        Your password must contain between 4 and 60 characters.
+                        Your password must contain between 6 and 60 characters.
                     </div>
                 </div>
 
@@ -90,7 +90,7 @@
                     db.collection("users").doc(user.uid).set({
                         'email': uEmail,
                         'membership': {
-                           'type': 'Basic',
+                           'type': 'Free',
                            'expiryDate': expiryDate
                         },
                         'status': 'Active',
@@ -120,7 +120,7 @@
             db.collection("users").doc(user.uid).set({
                 'email': user.email,
                 'membership': {
-                    'type': 'Basic',
+                    'type': 'Free',
                     'expiryDate': expiryDate
                 },
                 'status': 'Active',

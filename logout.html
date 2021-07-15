@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html class="no-js">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="img/favicon.png">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+        <link rel="stylesheet" href="css/global.css" />
+        <link rel="stylesheet" href="css/logout.css" />
+        <title>Anics - Watch Anime & Movies Online</title>
+        <style>
+            body::before{
+                background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.2) 60%, rgba(0, 0, 0, 0.9) 100%),url('../../images/logout.jpg');
+            }
+        </style>
+    </head>
+<body>
+    <header class="d-flex space-between middle-align" style="margin-top: 50px;">
+        <img src="img/logo.png" height="50px" width="170px" alt="site logo main"></img>
+        <button class="button" style="height: 35px;"><a href="login.html"> Sign In</a></button>
+    </header>
+    
+    <div class="logoutContainer f-s-20 d-flex flex-center direction-column" style="margin-top: 200px;">
+        <h2 class="signOutHeader f-s-28 f-w-4" style="margin: 0;">
+            Signed Out
+        </h2>
+        <p class="logoutMessage">
+            Only members using a shared or public computer need to end each visit to <span style="color: #e50914;">Anics</span> by using the Sign Out link.
+        </p>
+        <p class="logoutMessage">
+            This computer will be redirected to the <span style="color: #e50914;">Anics</span> home page in 15 seconds.
+        </p>
+        <button class="button logoutButton">
+            <a href="login.html">Continue</a>
+        </button>
+    </div>
+</body>
+<script>
+    window.setTimeout(function(){
+        window.location.href = "home.html";
+    }, 15000);
+</script>
+</html>

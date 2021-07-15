@@ -2,3 +2,54 @@
     font-family: AnicsFont;
     src: url("css/fonts/bebas-neue.ttf");
 }
+
+.headerLogo {
+    width: 100px;
+    height: 30px;
+}
+
+.preloaderBody {
+    margin: 0;
+    padding: 0;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.loading {
+    position: relative;
+    border: solid #ff0000;
+    border-width: 0 0 0 0.4em;
+    border-radius: 50%;
+    height: 5em;
+    width: 5em;
+    animation: loader 0.9s linear infinite;
+  }
+  .loading::before {
+    content: "";
+    position: absolute;
+    border-top: 0.6em solid #ff0000;
+    border-right: 0.6em solid transparent;
+    border-bottom: 0.6em solid transparent;
+    border-left: 0.4em #ff0000;
+    border-radius: 50%;
+    transform: translate(-3%, -1%) rotate(-50deg);
+    height: 100%;
+    width: 100%;
+  }
+  .loading::after {
+    content: "";
+    position: absolute;
+    border-top-right-radius: 3em;
+    border-bottom-right-radius: 3em;
+    transform: translate(760%, 4%) rotate(-10deg);
+    background: #ff0000;
+    height: 0.59em;
+    width: 0.4em;
+  }
+  @keyframes loader {
+    to {
+      transform: rotate(360deg);
+    }
+  }

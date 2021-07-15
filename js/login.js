@@ -25,7 +25,7 @@ const inputOnBlur = (ev) =>{
         }
     }
     if(inputTouched.password){
-        if(!(inputPassword.value.length >= 4 && inputPassword.value.length <= 60)){
+        if(!(inputPassword.value.length >= 6 && inputPassword.value.length <= 60)){
             warningPassword.style.display="block"
             inputPassword.style.borderBottom='2px solid #e87c03'
         }
