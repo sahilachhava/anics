@@ -89,13 +89,13 @@
                             <a class="nav-link active" aria-current="page" href="home.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Anime</a>
+                            <a class="nav-link" href="anime.html">Anime</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Movies</a>
+                            <a class="nav-link" href="movies.html">Movies</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">My List</a>
+                            <a class="nav-link" href="myList.html">My List</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav flex-row flex-wrap ms-md-auto" style="vertical-align: middle;">
@@ -331,8 +331,6 @@
                         $('#myListData').append(
                             '<div class="video card">'+
                                 '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                                    '<source src="img/latest/your-name.mkv" type="video/mp4">'+
-                                    'Your browser does not support the videos.'+
                                 '</video>'+
                                 '<div class="video-description d-flex flex-end direction-column">'+
                                     '<div class="play-button">'+
@@ -355,8 +353,6 @@
                         $('#myListData').append(
                             '<div class="video card">'+
                                 '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                                    '<source src="img/latest/your-name.mkv" type="video/mp4">'+
-                                    'Your browser does not support the videos.'+
                                 '</video>'+
                                 '<div class="video-description d-flex flex-end direction-column">'+
                                     '<div class="play-button">'+
@@ -398,8 +394,6 @@
                     $('#newReleasesData').append(
                         '<div class="video card">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                                '<source src="img/latest/your-name.mkv" type="video/mp4">'+
-                                'Your browser does not support the videos.'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
                                 '<div class="play-button">'+
@@ -422,8 +416,6 @@
                     $('#newReleasesData').append(
                         '<div class="video card">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                                '<source src="img/latest/your-name.mkv" type="video/mp4">'+
-                                'Your browser does not support the videos.'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
                                 '<div class="play-button">'+
@@ -460,8 +452,6 @@
                     $('#animeListData').append(
                         '<div class="video card">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                                '<source src="img/latest/your-name.mkv" type="video/mp4">'+
-                                'Your browser does not support the videos.'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
                                 '<div class="play-button">'+
@@ -485,8 +475,6 @@
                     $('#movieListData').append(
                         '<div class="video card">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                                '<source src="img/latest/your-name.mkv" type="video/mp4">'+
-                                'Your browser does not support the videos.'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
                                 '<div class="play-button">'+
@@ -535,13 +523,14 @@
 
     function openProfile(profileID){
         if(profileID != ""){
+            var currentURL = location.href;
             db.collection("users").doc(userID).collection("profiles").doc(profileID).get().then((doc)=>{
                 var myList = doc.data().myList;
                 localStorage.setItem("userProfile", doc.id);
                 localStorage.setItem("avatar", doc.data().avatar);
                 localStorage.setItem("userList", myList);
             }).then(()=>{
-                window.location.href = "home.html";
+                window.location.href = currentURL;
             });
         }
     }

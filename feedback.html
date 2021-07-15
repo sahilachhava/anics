@@ -124,21 +124,21 @@
         <section class="userprofile" id="userprofilecontainer">
             <div>
                 <h2 class="heading f-s-40">
-                    Suggest us
+                    Feedback us
                 </h2>
             </div>
             <div class="line"></div>
 
-            <form onsubmit="suggestNow();return false;" onreset="window.location.href='home.html';">
+            <form onsubmit="feedbackNow();return false;" onreset="window.location.href='myAccount.html';">
                 <select class="selectBox" id="type" required>
                     <option value="">Select Show Type</option>
                     <option value="anime">Anime</option>
                     <option value="movie">Movie</option>
+                    <option value="website">Website</option>
                     <option value="other">Other</option>
                 </select>
-                <input class="inputBoxes" type="text" placeholder="Name of the show" id="name" required/>
                 <textarea class="summaryBox" rows="5" placeholder="Summary of the show" id="summary" required></textarea>
-                <button type="submit" class="saveBtn">Suggest Now</button>
+                <button type="submit" class="saveBtn">Submit Feedback</button>
                 <button type="reset" class="cancelBtn">Cancel</button>
             </form>
         </section>
@@ -204,28 +204,24 @@
         }
     }
     
-    function suggestNow(){
+    function feedbackNow(){
         var type = document.getElementById("type");
-        var name = document.getElementById("name");
         var summary = document.getElementById("summary");
         var timeStamp = firebase.firestore.Timestamp.now().toDate(); 
 
-        if(type.value != "" && name.value != "" && summary.value != ""){
-            db.collection("suggestions").add({
+        if(type.value != "" && summary.value != ""){
+            db.collection("feedbacks").add({
                 'userID': userID,
                 'mediaType': type.value,
-                'name': name.value,
                 'summary': summary.value,
-                'status': 'Submitted',
                 'timeStamp': timeStamp,
             }).then(()=>{
-                alert("Suggestion submitted successfully!");
-                window.location.href = "home.html";
+                alert("Feedback submitted successfully!");
+                window.location.href = "myAccount.html";
             });
         }else{
-            alert("Please enter proper information to suggest us!");
+            alert("Please enter proper information to submit your feedback!");
             $('#type').val('');
-            $('#name').val('');
             $('#summary').val('');
         }
     }
