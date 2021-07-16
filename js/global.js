@@ -13,3 +13,7 @@ function userLogout(){
 	});
 }
 
+function showDetails(showID) {
+	localStorage.setItem('showID', showID);
+	location.href = "details.html";
+}

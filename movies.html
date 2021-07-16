@@ -198,7 +198,7 @@
                 var data = doc.data();
                 if(data.mediaType == "movie"){
                     $('#latestMovieListData').append(
-                        '<div class="video card" style="width: 300px; height: 200px; margin: 15px;">'+
+                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
@@ -227,7 +227,7 @@
                 var data = doc.data();
                 if(data.mediaType == "movie"){
                     $('#movieListData').append(
-                        '<div class="video card" style="width: 300px; height: 200px; margin: 15px;">'+
+                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+

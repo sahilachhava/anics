@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/global.css" />
     <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/rows.css" />
+    <link rel="stylesheet" href="css/details.css" />
     <link rel="stylesheet" href="css/mainPage.css" />
     <title>Anics - Watch Anime & Movies Online</title>
     <style> 
@@ -72,10 +72,10 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 menuList">
                         <li class="nav-item">
-                            <a class="nav-link" href="home.html">Home</a>
+                            <a class="nav-link active" aria-current="page" href="home.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="anime.html">Anime</a>
+                            <a class="nav-link" href="anime.html">Anime</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="movies.html">Movies</a>
@@ -122,38 +122,74 @@
         </nav>
     </header>
 
-    <div class="single-page-black-background">
-
-        <!-- anime on anics -->
-        <section id="mylist" class="listContainer" style="padding-top: 120px;">
-            <h4 class="mylist-heading" style="margin-left: 20px;">
-                Latest Anime
-            </h4>
-            <div class="row">
-                <div class="single-page-row-inner" id="latestAnimeListData">
-                    <!-- Data will be append here -->
+    <div class="detailMainWrapper">
+        <section class="informationSection">
+            <div class="movieinformation">
+                <div class="movietitle">
+                    <h4 id="showName"></h4>
+                </div>
+                <div class="description" id="showSummary">
+                </div>
+                <div class="castinformation">
+                    <div style="float: left;">
+                        <p id="showType"></p>
+                        <p id="showYear"></p>
+                    </div>
+                    <div style="float: right;">
+                        <p id="showSeason"></p>
+                        <p id="showStatus"></p>
+                    </div>
+                </div>
+                <div class="actions d-flex flex-start flex-middle">
+                    <a class="link-item">
+                        <i class="fa fa-play"></i>
+                        <span>Play</span>
+                    </a>
+                    <a id="addBtn" onclick="myListTrigger('add');" class="link-item">
+                        <i class="fa fa-plus"></i>
+                        <span>Add to My List</span>
+                    </a>
+                    <a id="removeBtn" onclick="myListTrigger('remove');" class="link-item" hidden>
+                        <i class="fa fa-minus-circle"></i>
+                        <span>Remove from My List</span>
+                    </a>
                 </div>
             </div>
-        </section>
-        <!-- anime end -->
-
-        <!-- anime on anics -->
-        <section id="mylist" class="listContainer" style="padding-top: 10px;">
-            <h4 class="mylist-heading" style="margin-left: 20px;">
-                All Anime
-            </h4>
-            <div class="row">
-                <div class="single-page-row-inner" id="animeListData">
-                    <!-- Data will be append here -->
-                </div>
+            <div class="moviePoster">
+                <img id="showPoster" alt="poster">
             </div>
         </section>
-        <!-- anime end -->
 
+        <section class="episodeLists">
+
+            <div class="mainHeading">
+                <div class="customSelect seasonDropdown" style="float: left;">
+                    <select id="seasonList">
+                    </select>
+                </div>
+                <div class="customSelect audioDropdown">
+                    <select id="audioType">
+                        <option value="dubbed">Dubbed</option>
+                        <option value="subbed">Subbed</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="allEpisodes">
+                
+                <div class="episode">
+                    <h4 class="playIcon">
+                        <i class="fa fa-play"></i>
+                    </h4>
+                    <h4 class="episodeTitle">
+                        Episode 1
+                    </h4>
+                </div>
+
+            </div>
+        </section>
     </div>
     </div>
-
-
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
@@ -193,75 +229,44 @@
             })
         });
 
-        db.collection("medias").orderBy("timeStamp", "desc").limit(8).get().then((snapShot)=>{
-            snapShot.forEach((doc)=>{
-                var data = doc.data();
-                if(data.mediaType == "anime"){
-                    $('#latestAnimeListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
-                            '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                            '</video>'+
-                            '<div class="video-description d-flex flex-end direction-column">'+
-                                '<div class="play-button">'+
-                                    '<svg viewBox="0 0 24 24">'+
-                                        '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
-                                    '</svg>'+
-                                '</div>'+
-                                '<div>'+
-                                    '<h4 class="heading text-shadow">'+
-                                        data.name+
-                                    '</h4>'+
-                                '</div>'+
-                                '<div class="info d-flex flex-middle flex-no-wrap">'+
-                                    '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
-                    );
+        const showID = localStorage.getItem("showID");
+        db.collection("medias").doc(showID).get().then((doc)=>{
+            var data = doc.data();
+            $('#showSummary').text(data.summary);
+            if(data.mediaType == "anime"){
+                $('#showType').html("<span class='name'>Type:</span> Anime");
+                $('#showSeason').html("<span class='name'>Season:</span> "+data.seasons);
+                for(var cntr = 1; cntr <= data.seasons; cntr++){
+                    $('#seasonList').append('<option value="season'+cntr+'">Season '+cntr+'</option>');
                 }
-            })
+            }else{
+                $('#showType').html("<span class='name'>Type:</span> Movie");
+                $('#showSeason').html("<span class='name'>Duration:</span> "+data.duration);
+                $('.seasonDropdown').attr('hidden','true');
+            }
+            $('#showYear').html("<span class='name'>Released:</span> "+data.year);
+            $('#showStatus').html("<span class='name'>Status:</span> "+data.status);
+            $('#showPoster').attr('src', data.posterURL);
+            $('#showName').text(data.name);
         });
-
-        db.collection("medias").get().then((snapShot)=>{
-            snapShot.forEach((doc)=>{
-                var data = doc.data();
-                if(data.mediaType == "anime"){
-                    $('#animeListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
-                            '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                            '</video>'+
-                            '<div class="video-description d-flex flex-end direction-column">'+
-                                '<div class="play-button">'+
-                                    '<svg viewBox="0 0 24 24">'+
-                                        '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
-                                    '</svg>'+
-                                '</div>'+
-                                '<div>'+
-                                    '<h4 class="heading text-shadow">'+
-                                        data.name+
-                                    '</h4>'+
-                                '</div>'+
-                                '<div class="info d-flex flex-middle flex-no-wrap">'+
-                                    '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
-                    );
-                }
-            })
+        var myList = localStorage.getItem("userList").split(",");
+        myList.forEach((mediaID)=>{
+            if(mediaID == showID){
+                $('#addBtn').attr('hidden', 'true');
+                $('#removeBtn').removeAttr('hidden');
+            }
         });
     }
 
     function openProfile(profileID){
         if(profileID != ""){
-            var currentURL = location.href;
             db.collection("users").doc(userID).collection("profiles").doc(profileID).get().then((doc)=>{
                 var myList = doc.data().myList;
                 localStorage.setItem("userProfile", doc.id);
                 localStorage.setItem("avatar", doc.data().avatar);
                 localStorage.setItem("userList", myList);
             }).then(()=>{
-                window.location.href = currentURL;
+                window.location.href = "home.html";
             });
         }
     }
@@ -287,5 +292,39 @@
         $(".searchIcon").removeAttr('hidden');
         $(".searchWrap").attr('hidden', 'true');
     });
+
+    function myListTrigger(action){
+        var myList = [];
+        if(localStorage.getItem("userList") != ""){
+            myList = localStorage.getItem("userList").split(",");
+        }
+        var showID = localStorage.getItem("showID");
+        if(action == "add"){
+            if(myList.length == 0){
+                myList[0] = showID;
+            }else{
+                myList.push(showID);
+            }
+            $('#addBtn').attr('hidden', 'true');
+            $('#removeBtn').removeAttr('hidden');
+        }else{
+            myList = arrayRemove(myList, showID);
+            if(myList.length == 0){
+                myList = [];
+            }
+            $('#removeBtn').attr('hidden', 'true');
+            $('#addBtn').removeAttr('hidden');
+        }
+        db.collection("users").doc(userID).collection("profiles").doc(currentProfile).update({
+            'myList': myList
+        });
+        localStorage.setItem("userList", myList);
+    }
+
+    function arrayRemove(arr, value) {
+        return arr.filter(function(val){
+            return val != value;
+        });
+    }
 </script>
 </html>

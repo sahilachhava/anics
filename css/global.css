@@ -3,6 +3,9 @@
     src: url("css/fonts/bebas-neue.ttf");
 }
 
+*{
+  user-select:none;
+}
 .headerLogo {
     width: 100px;
     height: 30px;

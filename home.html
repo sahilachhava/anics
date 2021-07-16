@@ -329,7 +329,7 @@
                     var data = doc.data();
                     if(data.mediaType == "anime"){
                         $('#myListData').append(
-                            '<div class="video card">'+
+                            '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
                                 '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                                 '</video>'+
                                 '<div class="video-description d-flex flex-end direction-column">'+
@@ -351,7 +351,7 @@
                         );
                     }else{
                         $('#myListData').append(
-                            '<div class="video card">'+
+                            '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
                                 '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                                 '</video>'+
                                 '<div class="video-description d-flex flex-end direction-column">'+
@@ -392,7 +392,7 @@
                 mediaCount++;
                 if(data.mediaType == "anime"){
                     $('#newReleasesData').append(
-                        '<div class="video card">'+
+                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
@@ -414,7 +414,7 @@
                     );
                 }else{
                     $('#newReleasesData').append(
-                        '<div class="video card">'+
+                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
@@ -450,7 +450,7 @@
                 if(data.mediaType == "anime"){
                     animeCount++;
                     $('#animeListData').append(
-                        '<div class="video card">'+
+                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+
@@ -473,7 +473,7 @@
                 }else{
                     movieCount++;
                     $('#movieListData').append(
-                        '<div class="video card">'+
+                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+

@@ -1,0 +1,146 @@
+.informationSection {
+    padding-top: 75px;
+}
+.movieinformation{
+    margin-left: 50px;
+    max-width: 550px;
+    float: left;
+}
+.movieinformation .movietitle h4 {
+    color: #fff;
+    font-size: 32px;
+    margin-top: 30px;
+}
+.description{
+    text-align: justify;
+    margin-top: 30px;
+    font-size: 20px;
+    width: 525px;
+    max-height: 240px;
+    overflow: hidden;
+    color: rgba(255, 255, 255, 0.89);
+}
+.castinformation{
+    margin-top: 20px;
+}
+.castinformation p{
+    margin-top: 10px;
+    font-size: 16px;
+    color: rgb(221, 221, 221);
+}
+.castinformation span{
+    font-weight: bold;
+    color: rgb(241, 240, 240);
+}
+
+.actions{
+    margin-top: 125px;
+}
+.actions a{
+    font-weight: 500;
+    color: white;
+    text-align: center;
+    font-size: 16px;
+    margin-right: 25px;
+    background-color: #425265;
+    border-radius: 5px;
+    padding: 15px;
+    cursor: pointer;
+}
+.actions a i{
+    float: left;
+    font-size: 25px;
+}
+.actions a span{
+    float: right;
+    margin-left: 10px;
+}
+
+.moviePoster {
+    padding-right: 30px;
+    padding-top: 25px;
+    float: right;
+}
+.moviePoster img{
+    border-radius: 15px;
+    height: 500px;
+    width: 800px;
+}
+
+.episodeLists {
+    display: block;
+    padding: 600px 40px 50px 40px;
+}
+.mainHeading {
+    margin-left: 5px;
+    padding-bottom: 60px;
+    border-bottom: 2px solid #555;
+}
+.mainHeading h4 {
+    font-size: 25px;
+    color: #e5e5e5;
+    font-weight: 600;
+    padding: 0px 30px;
+}
+.mainHeading .customSelect {
+    float: right;
+    position: relative;
+}
+.mainHeading .customSelect:after {
+    content: "\25b6";
+    position: absolute;
+    margin-bottom: 12px;
+    bottom: 0; right: 10px;
+    transform: rotate(90deg);
+    cursor: pointer;
+}
+.mainHeading select {
+    font-size: 18px;
+    color: #e5e5e5;
+    font-weight: 600;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: none;
+    color: #fff;
+    padding: 9px 18px;
+    background-color: #242424;
+    border-radius: 5px;
+    padding-right: 30px;
+    cursor: pointer;
+}
+
+.allEpisodes {
+    padding: 0px 15px;
+    margin-top: 20px;
+}
+.episode {
+    display: inline-block;
+    width: 100%;
+    background-color: #242424;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 #fff;
+    transition: 0.3s;
+}
+.episode .playIcon {
+    float: left;
+    padding-left: 15px;
+    cursor: pointer;
+}
+.episode .playIcon i {
+    font-size: 32px;
+    height: 75px;
+    width: 75px;
+    border: 2px solid white;
+    border-radius: 50%;
+    padding: 20px 0px 0px 23px;
+}
+.episode .episodeTitle {
+    float: center;
+    font-size: 32px;
+    margin-left: 120px;
+    margin-top: 15px;
+}
