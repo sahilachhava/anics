@@ -75,7 +75,7 @@
                             <a class="nav-link" href="home.html">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="anime.html">Anime</a>
+                            <a class="nav-link" href="anime.html">Anime</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="movies.html">Movies</a>
@@ -127,23 +127,10 @@
         <!-- anime on anics -->
         <section id="mylist" class="listContainer" style="padding-top: 120px;">
             <h4 class="mylist-heading" style="margin-left: 20px;">
-                Latest Anime
+                Search results
             </h4>
             <div class="row">
-                <div class="single-page-row-inner" id="latestAnimeListData">
-                    <!-- Data will be append here -->
-                </div>
-            </div>
-        </section>
-        <!-- anime end -->
-
-        <!-- anime on anics -->
-        <section id="mylist" class="listContainer" style="padding-top: 10px;">
-            <h4 class="mylist-heading" style="margin-left: 20px;">
-                All Anime
-            </h4>
-            <div class="row">
-                <div class="single-page-row-inner" id="animeListData">
+                <div class="single-page-row-inner" id="searchListData">
                     <!-- Data will be append here -->
                 </div>
             </div>
@@ -193,63 +180,62 @@
             })
         });
 
-        db.collection("medias").orderBy("timeStamp", "desc").limit(8).get().then((snapShot)=>{
-            snapShot.forEach((doc)=>{
-                var data = doc.data();
-                if(data.mediaType == "anime"){
-                    $('#latestAnimeListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
-                            '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                            '</video>'+
-                            '<div class="video-description d-flex flex-end direction-column">'+
-                                '<div class="play-button">'+
-                                    '<svg viewBox="0 0 24 24">'+
-                                        '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
-                                    '</svg>'+
+        //Search List Data Fetching
+       if(localStorage.getItem("searchList") != ""){
+            const myList = localStorage.getItem("searchList").split(",");
+            myList.forEach((mediaID)=>{
+                db.collection("medias").doc(mediaID).get().then((doc)=>{
+                    var data = doc.data();
+                    if(data.mediaType == "anime"){
+                        $('#searchListData').append(
+                            '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
+                                '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
+                                '</video>'+
+                                '<div class="video-description d-flex flex-end direction-column">'+
+                                    '<div class="play-button">'+
+                                        '<svg viewBox="0 0 24 24">'+
+                                            '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
+                                        '</svg>'+
+                                    '</div>'+
+                                    '<div>'+
+                                        '<h4 class="heading text-shadow">'+
+                                            data.name+
+                                        '</h4>'+
+                                    '</div>'+
+                                    '<div class="info d-flex flex-middle flex-no-wrap">'+
+                                        '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
+                                    '</div>'+
                                 '</div>'+
-                                '<div>'+
-                                    '<h4 class="heading text-shadow">'+
-                                        data.name+
-                                    '</h4>'+
+                            '</div>'
+                        );
+                    }else{
+                        $('#searchListData').append(
+                            '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
+                                '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
+                                '</video>'+
+                                '<div class="video-description d-flex flex-end direction-column">'+
+                                    '<div class="play-button">'+
+                                        '<svg viewBox="0 0 24 24">'+
+                                            '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
+                                        '</svg>'+
+                                    '</div>'+
+                                    '<div>'+
+                                        '<h4 class="heading text-shadow">'+
+                                            data.name+
+                                        '</h4>'+
+                                    '</div>'+
+                                    '<div class="info d-flex flex-middle flex-no-wrap">'+
+                                        '<p class="season-count text-shadow">Movie</p>'+
+                                    '</div>'+
                                 '</div>'+
-                                '<div class="info d-flex flex-middle flex-no-wrap">'+
-                                    '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
-                    );
-                }
-            })
-        });
-
-        db.collection("medias").get().then((snapShot)=>{
-            snapShot.forEach((doc)=>{
-                var data = doc.data();
-                if(data.mediaType == "anime"){
-                    $('#animeListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
-                            '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                            '</video>'+
-                            '<div class="video-description d-flex flex-end direction-column">'+
-                                '<div class="play-button">'+
-                                    '<svg viewBox="0 0 24 24">'+
-                                        '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
-                                    '</svg>'+
-                                '</div>'+
-                                '<div>'+
-                                    '<h4 class="heading text-shadow">'+
-                                        data.name+
-                                    '</h4>'+
-                                '</div>'+
-                                '<div class="info d-flex flex-middle flex-no-wrap">'+
-                                    '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
-                    );
-                }
-            })
-        });
+                            '</div>'
+                        );
+                    }
+                });
+            });
+        }else{
+            $('#searchListData').html("<h4 style='color: #666666;margin-left: 20px;margin-top: 15px;font-size: 18px;'>No search result found.</h4>");
+        }
     }
 
     function openProfile(profileID){

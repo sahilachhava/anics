@@ -193,6 +193,25 @@
 
         $(".searchIcon").removeAttr('hidden');
         $(".searchWrap").attr('hidden', 'true');
+        $('#searchText').val('');
+    });
+
+    $('#searchText').on('keypress', function(e){
+        if(e.keyCode == 13){
+            var searchText = this.value.toLowerCase();
+            db.collection("medias").get().then((docSnap)=>{
+                var foundSearches = [];
+                docSnap.forEach((doc)=>{
+                    var showName = doc.data().name.toLowerCase();
+                    if(showName.includes(searchText)){
+                        foundSearches.push(doc.id);
+                    }
+                });
+                localStorage.setItem("searchList", foundSearches);
+                location.href = "searchResults.html";
+            });
+            return false;
+        }
     });
 </script>
 </html>
