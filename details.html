@@ -168,25 +168,35 @@
                     </select>
                 </div>
                 <div class="customSelect audioDropdown">
-                    <select id="audioType">
-                        <option value="dubbed">Dubbed</option>
+                    <select id="audioType" onchange="audioSectionChange();">
                         <option value="subbed">Subbed</option>
+                        <option value="dubbed">Dubbed</option>
                     </select>
                 </div>
             </div>
 
-            <div class="allEpisodes">
-                
+            <div class="allEpisodes" id="subbedSection">  
                 <div class="episode">
                     <h4 class="playIcon">
                         <i class="fa fa-play"></i>
                     </h4>
                     <h4 class="episodeTitle">
-                        Episode 1
+                        S1:E01 My Hero
                     </h4>
                 </div>
-
             </div>
+
+            <div class="allEpisodes" id="dubbedSection" hidden>  
+                <div class="episode">
+                    <h4 class="playIcon">
+                        <i class="fa fa-play"></i>
+                    </h4>
+                    <h4 class="episodeTitle">
+                        S1:E01 My Hero
+                    </h4>
+                </div>
+            </div>
+
         </section>
     </div>
     </div>
@@ -228,6 +238,16 @@
                 }
             })
         });
+
+        var audioPref = localStorage.getItem("audioPreference");
+        if(audioPref == "dubbed"){
+            $('#audioType').val("dubbed");
+            $('#subbedSection').attr('hidden', 'true');
+            $('#dubbedSection').removeAttr('hidden');
+        }else{
+            $('#dubbedSection').attr('hidden', 'true');
+            $('#subbedSection').removeAttr('hidden');
+        }
 
         const showID = localStorage.getItem("showID");
         db.collection("medias").doc(showID).get().then((doc)=>{
@@ -345,6 +365,18 @@
         return arr.filter(function(val){
             return val != value;
         });
+    }
+
+    function audioSectionChange(){
+        if($('#audioType').val() == "dubbed"){
+            localStorage.setItem("audioPreference", "dubbed");
+            $('#subbedSection').attr('hidden', 'true');
+            $('#dubbedSection').removeAttr('hidden');
+        }else{
+            localStorage.setItem("audioPreference", "dubbed");
+            $('#dubbedSection').attr('hidden', 'true');
+            $('#subbedSection').removeAttr('hidden');
+        }
     }
 </script>
 </html>
