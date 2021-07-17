@@ -76,6 +76,13 @@
 </li>
 
 <li>
+<a href="addtrending.html" class="waves-effect">
+    <i class="mdi mdi-star-circle"></i>
+    <span> Add Trending </span>
+</a>
+</li>
+
+<li>
 <a href="addepisode.html" class="waves-effect">
     <i class="mdi mdi-new-box"></i>
     <span> Add New Episode </span>
@@ -153,7 +160,7 @@
 <table id="exampleTable1" class="table table-striped table-bordered" cellspacing="0" width="100%">
 <thead>
 <tr>
-<th> Sr. No. </th>
+<th> Type </th>
 <th> Feedback </th>
 <th> Date </th>
 </tr>
@@ -284,8 +291,8 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
                     var docData = doc.data();
                     var date = getDate(docData.timeStamp);
                     tabData.push({
-                        'feedback': docData.feedback,
-                        'no': count,
+                        'feedback': docData.summary,
+                        'mediaType': docData.mediaType,
                         'date': date,
                     });
                 }else{
@@ -300,7 +307,7 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
                 "ordering": true,
                 "data": tabData,
                 "columns": [
-                    {"data": "no"},
+                    {"data": "mediaType"},
                     {"data": "feedback"},
                     {"data": "date"},
                 ]

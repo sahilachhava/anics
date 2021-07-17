@@ -76,6 +76,13 @@
 </li>
 
 <li>
+<a href="addtrending.html" class="waves-effect">
+    <i class="mdi mdi-star-circle"></i>
+    <span> Add Trending </span>
+</a>
+</li>
+
+<li>
 <a href="addepisode.html" class="waves-effect">
     <i class="mdi mdi-new-box"></i>
     <span> Add New Episode </span>
@@ -153,18 +160,7 @@
 <h4 class="mt-0 header-title">Fill out the form</h4><br>			
 <form onsubmit="addEpisode();return false;">
 
-<div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Media Type</label>
-<div class="col-sm-6">
-<select class="form-control" id="mediaType" onchange="updateMediaType(this);" required>
-    <option value="">Select Media Type</option>
-    <option value="anime">Anime</option>
-    <option value="movie">Movie</option>
-</select>
-</div>
-</div>
-
-<div class="form-group row" id="animeRow" hidden>
+<div class="form-group row" id="animeRow">
 <label for="example-text-input" class="col-sm-2 col-form-label">Anime</label>
 <div class="col-sm-6">
 <select class="form-control" id="animeList" onchange="updateSeasons(this);">
@@ -173,35 +169,33 @@
 </div>
 </div>
 
-<div class="form-group row" id="movieRow" hidden>
-<label for="example-text-input" class="col-sm-2 col-form-label">Movie</label>
-<div class="col-sm-6">
-<select class="form-control" id="movieList">
-    <option value="">Select Movie</option>
-</select>
-</div>
-</div>
-
 <div class="form-group row" id="seasonRow" hidden>
 <label for="example-text-input" class="col-sm-2 col-form-label">Season</label>
 <div class="col-sm-6">
-<select class="form-control" id="seasonList">
+<select class="form-control" id="seasonList" onchange="updateName(this);">
     <option value="">Select Season</option>
 </select>
 </div>
 </div>
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Episode Name</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" placeholder="Episode Name" value="Episode " id="name" required>
+<input class="form-control" type="text" placeholder="Episode Name" value="" id="name" required>
 </div>
 </div>
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Media URL</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Sub URL</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" placeholder="Episode URL" value="" id="url" required>
+<input class="form-control" type="text" placeholder="Sub Episode URL" value="" id="sub" required>
+</div>
+</div>
+
+<div class="form-group row">
+<label for="example-text-input" class="col-sm-2 col-form-label">Dub URL</label>
+<div class="col-sm-6">
+<input class="form-control" type="text" placeholder="Dub Episode URL" value="" id="dub" required>
 </div>
 </div>
 
@@ -335,29 +329,6 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
                 $("#animeList").append('<option value="'+doc.id+'">'+data.name+'</option>');
             })
         });
-
-        db.collection("medias").where("mediaType", "==", "movie").where("status", "==", "Upcoming").get().then((docs)=>{
-            docs.forEach((doc)=>{
-                var data = doc.data();
-                $("#movieList").append('<option value="'+doc.id+'">'+data.name+'</option>');
-            })
-        });
-    }
-
-    function updateMediaType(mediaType) {
-        if(mediaType.value == "anime"){
-            $("#animeRow").removeAttr("hidden");
-            $('#movieRow').attr('hidden', 'true');
-            $('#seasonRow').attr('hidden', 'true');
-        }else if(mediaType.value == "movie"){
-            $("#movieRow").removeAttr("hidden");
-            $('#animeRow').attr('hidden', 'true');
-            $('#seasonRow').attr('hidden', 'true');
-        }else{
-            $('#animeRow').attr('hidden', 'true');
-            $('#movieRow').attr('hidden', 'true');
-            $('#seasonRow').attr('hidden', 'true');
-        }
     }
 
     function updateSeasons(mediaID){
@@ -371,26 +342,25 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
         })
     }
 
+    function updateName(season){
+        var episodeName = season.value.substr(6, 10);
+        document.getElementById('name').value = "S" + episodeName + "E";
+    }
+
     function addEpisode(){
         $('#submitBtn').html('Saving Episode...').addClass('disabled');
 
-        var docID = null;
-        var mediaType = document.getElementById('mediaType').value;
+        var docID = document.getElementById("animeList").value;
         var season = document.getElementById('seasonList').value;
-        if(mediaType == "anime"){
-            docID = document.getElementById("animeList").value;
-        }else{
-            docID = document.getElementById("movieList").value;
-            season = "season1";
-        }
-        
     	var name = document.getElementById('name').value;
-        var mediaURL = document.getElementById('url').value;
+        var subURL = document.getElementById('sub').value;
+        var dubURL = document.getElementById('dub').value;
         var timeStamp = firebase.firestore.Timestamp.now().toDate();
 
     	db.collection("medias").doc(docID).collection(season).doc(name).set({
     		'name': name,
-            'mediaURL': mediaURL,
+            'subbedURL': subURL,
+            'dubbedURL': dubURL,
             'timeStamp': timeStamp,
     	})
     	.then(()=>{

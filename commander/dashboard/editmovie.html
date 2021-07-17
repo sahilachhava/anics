@@ -76,6 +76,13 @@
 </li>
 
 <li>
+<a href="addtrending.html" class="waves-effect">
+    <i class="mdi mdi-star-circle"></i>
+    <span> Add Trending </span>
+</a>
+</li>
+
+<li>
 <a href="addepisode.html" class="waves-effect">
     <i class="mdi mdi-new-box"></i>
     <span> Add New Episode </span>
@@ -168,6 +175,13 @@
 </div>
 
 <div class="form-group row">
+<label for="example-text-input" class="col-sm-2 col-form-label">Duration</label>
+<div class="col-sm-6">
+<input class="form-control" type="text" name="duration" placeholder="Movie Duration" value="" id="duration" required>
+</div>
+</div>
+
+<div class="form-group row">
 <label for="example-text-input" class="col-sm-2 col-form-label">Summary</label>
 <div class="col-sm-6">
 <textarea class="form-control" type="text" placeholder="Summary about anime" rows="5" value="" id="summary" required>
@@ -176,13 +190,16 @@
 </div>
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Status</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Sub URL</label>
 <div class="col-sm-6">
-<select class="form-control" id="currentStatus" required>
-    <option value="">Select Status</option>
-    <option value="Released">Released</option>
-    <option value="Upcoming">Upcoming</option>
-</select>
+<input class="form-control" type="text" name="sub" placeholder="Movie Subbed Link" value="" id="sub">
+</div>
+</div>
+
+<div class="form-group row">
+<label for="example-text-input" class="col-sm-2 col-form-label">Dub URL</label>
+<div class="col-sm-6">
+<input class="form-control" type="text" name="dub" placeholder="Movie Dubbed Link" value="" id="dub">
 </div>
 </div>
 
@@ -317,7 +334,9 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
 
     $('#name').attr('disabled', 'disabled');
     $('#year').attr('disabled', 'disabled');
-    $('#currentStatus').attr('disabled', 'disabled');
+    $('#duration').attr('disabled', 'disabled');
+    $('#sub').attr('disabled', 'disabled');
+    $('#dub').attr('disabled', 'disabled');
     $('#summary').attr('disabled', 'disabled');
 
     if(uid==null){
@@ -328,12 +347,16 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
             var data = doc.data();
             document.getElementById('name').value = data.name;
             document.getElementById('year').value = data.year;
-            document.getElementById('currentStatus').value = data.status;
+            document.getElementById('duration').value = data.duration;
+            document.getElementById('sub').value = data.subbedLink;
+            document.getElementById('dub').value = data.dubbedLink;
             document.getElementById('summary').value = data.summary;
         }).then(()=>{
             $('#name').removeAttr('disabled');
             $('#year').removeAttr('disabled');
-            $('#currentStatus').removeAttr('disabled');
+            $('#duration').removeAttr('disabled');
+            $('#sub').removeAttr('disabled');
+            $('#dub').removeAttr('disabled');
             $('#summary').removeAttr('disabled');
         });
     }
@@ -344,8 +367,11 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
         var docID = getUrlParameter('docID');
     	var name = document.getElementById('name').value;
         var year = document.getElementById('year').value;
-        var currentStatus = document.getElementById('currentStatus').value;
+        var duration = document.getElementById('duration').value;
         var summary = document.getElementById('summary').value;
+        var subLink = document.getElementById('sub').value;
+        var dubLink = document.getElementById('dub').value;
+
         var timeStamp = firebase.firestore.Timestamp.now().toDate();
         var poster = document.getElementById('poster').files[0];
 
@@ -355,7 +381,9 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
             await db.collection("medias").doc(docID).update({
                 'name': name,
                 'year': year,
-                'status': currentStatus,
+                'duration': duration,
+                'subURL': subLink,
+                'dubURL': dubLink,
                 'summary': summary,
                 'lastModified': timeStamp,
             })
@@ -374,7 +402,9 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
             await db.collection("medias").doc(docID).update({
                 'name': name,
                 'year': year,
-                'status': currentStatus,
+                'duration': duration,
+                'subURL': subLink,
+                'dubURL': dubLink,
                 'summary': summary,
                 'lastModified': timeStamp,
             })

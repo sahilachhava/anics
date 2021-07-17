@@ -141,8 +141,8 @@
         <section id="browse-dashboard" class=" d-flex direction-column flex-start middle-align">
             <div>
                 <!--trailer video-->
-                <video class="hero-background-image" id="hero-video" muted poster="img/latest/poster.jpg">
-                    <source src="img/latest/your-name.mkv" type="video/mp4">
+                <video class="hero-background-image" id="hero-video" muted poster="">
+                    <source src="" type="video/mp4">
                     Your browser does not support videos.
                 </video>
                 <!--left shadow-->
@@ -151,7 +151,7 @@
 
             <div class="container text-container" style="z-index: 5;">
                 <div class="contentlogo">
-                    <img src="img/latest/logo.png" alt="content logo" class="show-logo" />
+                    <img src="" id="trendingLogo" class="show-logo" />
                 </div>
 
                 <!--top 10 ranking badge svg-->
@@ -179,28 +179,26 @@
                 </div>
 
                 <div class="synopsis m-t-20" style="max-width: 500px;">
-                    <p>
-                        Two teenagers share a profound, magical connection upon discovering they are swapping bodies. Things manage to become even more complicated when the boy and girl decide to meet in person.
-                    </p>
+                    <p id="trendingSummary"></p>
                 </div>
-                <div class="buttons-container" style="margin-top: 20px;">
+                <div class="buttons-container" style="margin-top: 20px;" id="trendingPlayBtn">
                     <button class="play-button">
                         <span>
                             <svg viewBox="0 0 24 24">
                                 <path d="M6 4l15 8-15 8z" fill="currentColor"></path>
                             </svg>
                         </span>
-                        <a href="#">Play</a>
+                        <a>Play</a>
                     </button>
 
-                    <button class="more-info-button m-t-20">
+                    <button class="more-info-button m-t-20" id="trendingInfoBtn">
                         <span>
                             <svg viewBox="0 0 24 24">
                                 <path d="M22 12c0 5.523-4.477 10-10 10S2 17.523 2 12 6.477 2 12 2s10 4.477 10 10zm-2 0a8 8 0 0 0-8-8 8 8 0 0 0-8 8 8 8 0 0 0 8 8 8 8 0 0 0 8-8zm-9 6v-7h2v7h-2zm1-8.75a1.21 1.21 0 0 1-.877-.364A1.188 1.188 0 0 1 10.75 8c0-.348.123-.644.372-.886.247-.242.54-.364.878-.364.337 0 .63.122.877.364.248.242.373.538.373.886s-.124.644-.373.886A1.21 1.21 0 0 1 12 9.25z"
                                     fill="currentColor"></path>
                             </svg>
                         </span> 
-                        <a href="#">More Info</a>
+                        <a>More Info</a>
                     </button>
 
                     <span class="muteIcon">
@@ -319,6 +317,18 @@
                     ));
                 }
             })
+        });
+
+        //Trending Show Fetching
+        db.collection("trending").doc("media").get().then((doc)=>{
+            var data = doc.data();
+            $("#hero-video").attr('poster', data.posterURL);
+            $("#hero-video source").attr('src', data.trailerURL);
+            $("#trendingLogo").attr('src', data.logoURL);
+
+            $("#trendingSummary").text(data.summary);
+            $("#trendingPlayBtn").attr('href', '#');
+            $("#trendingInfoBtn").attr('onclick', 'showDetails(`'+data.mediaID+'`);');
         });
 
         //My List Data Fetching

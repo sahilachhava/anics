@@ -126,7 +126,7 @@
         <section class="informationSection">
             <div class="movieinformation">
                 <div class="movietitle">
-                    <h4 id="showName"></h4>
+                    <h4 style="font-weight: 700;" id="showName"></h4>
                 </div>
                 <div class="description" id="showSummary">
                 </div>
@@ -239,13 +239,14 @@
                 for(var cntr = 1; cntr <= data.seasons; cntr++){
                     $('#seasonList').append('<option value="season'+cntr+'">Season '+cntr+'</option>');
                 }
+                $('#showStatus').html("<span class='name'>Status:</span> "+data.status);
             }else{
                 $('#showType').html("<span class='name'>Type:</span> Movie");
                 $('#showSeason').html("<span class='name'>Duration:</span> "+data.duration);
                 $('.seasonDropdown').attr('hidden','true');
+                $('#showStatus').html("<span class='name'>Status:</span> Released");
             }
             $('#showYear').html("<span class='name'>Released:</span> "+data.year);
-            $('#showStatus').html("<span class='name'>Status:</span> "+data.status);
             $('#showPoster').attr('src', data.posterURL);
             $('#showName').text(data.name);
         });

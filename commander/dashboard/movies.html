@@ -76,6 +76,13 @@
 </li>
 
 <li>
+<a href="addtrending.html" class="waves-effect">
+    <i class="mdi mdi-star-circle"></i>
+    <span> Add Trending </span>
+</a>
+</li>
+
+<li>
 <a href="addepisode.html" class="waves-effect">
     <i class="mdi mdi-new-box"></i>
     <span> Add New Episode </span>
@@ -155,7 +162,7 @@
 <tr>
 <th> Movie Name </th>
 <th> Released Year</th>
-<th> Status </th>
+<th> Duration </th>
 <th> Poster </th>
 <th> Edit </th>
 </tr>
@@ -289,7 +296,7 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
                         'name': docData.name,
                         'year': docData.year,
                         'posterURL': docData.posterURL,
-                        'status': docData.status
+                        'duration': docData.duration
                     });
                 }else{
                     alert("No Movies Found! Add New Movie Now!");
@@ -305,7 +312,7 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
                 "columns": [
                     {'data':'name'},
                     {'data':'year'},
-                    {'data':'status'},
+                    {'data':'duration'},
                     {
                         "data": "posterURL",
                         "render": function (data){

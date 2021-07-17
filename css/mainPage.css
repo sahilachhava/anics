@@ -51,8 +51,10 @@
   }
   #browse-dashboard .show-logo{
       max-width:380px;
-      margin-top: 40px;
+      margin-top: 20px;
       margin-bottom: 50px;
+      width: 380px;
+      height: 120px;
   }
   .ranking {
       margin-bottom: 30px;
@@ -77,6 +79,8 @@
     font-size: 20px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.45);
     margin-bottom: 30px;
+    overflow: hidden;
+    height: 125px;
   }
   a{
     color: var(--link-color);
