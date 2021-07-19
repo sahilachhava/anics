@@ -137,7 +137,7 @@ video.addEventListener('timeupdate', () => {
   if(totalSecondsRemaining >= 3600) {
     hours = (time.getUTCHours().toString()).padStart('2', '0');
   }
-
+  
   let minutes = (time.getUTCMinutes().toString()).padStart('2', '0');
   let seconds = (time.getUTCSeconds().toString()).padStart('2', '0');
 

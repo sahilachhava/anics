@@ -13,17 +13,18 @@
 <body>
     <div class="video-container">
         
-        <video>
-            <source src="https://streamani.net/goto.php?url=aHR0cHM6LyURASDGHUSRFSJGYfdsffsderFStewthsfSFtrftesdf9zdG9yYWdlLmdvb2dsZWFwaXMuY29tL3NraWxmdWwtYWxwaGEtMzE3MjAyL0pKUlpOUDdJWkRKUC9zdDIyX2Jva3Utbm8taGVyby1hY2FkZW1pYS1kdWItZXBpc29kZS0xMS4xNjI2MjMwNTAzLm1wNA==" type="video/mp4">
+        <video id="mainVideo">
+            <source id="videoURL">
             Your browser does not support videos.
         </video>
 
         <div class="controls-container">
 
-            <div class="back-button">
+            <div class="back-button" id="backButton">
                 <i class="fa fa-arrow-left" aria-hidden="true"></i>
             </div>
 
+            <a class="elapsed-time" hidden></a>
             <div class="progress-controls">
                 <div class="progress-bar">
                     <div class="watched-bar"></div>
@@ -72,7 +73,7 @@
                 </button>
 
                 <p class="title">
-                    <span id="episodeName" class="series">My Hero Academia <span>S1:E11 My Hero</span></span> 
+                    <span id="episodeName" class="series"><span></span></span> 
                 </p>
 
                 <button class="help">
@@ -84,14 +85,14 @@
                     </svg>
                 </button>
 
-                <button class="previous">
+                <button class="previous" id="prevBtn">
                     <svg viewBox="0 0 24 24" style="transform: rotate(180deg);">
                         <polygon points="5 4 15 12 5 20 5 4"></polygon>
                         <line x1="19" y1="5" x2="19" y2="19"></line>
                     </svg>
                 </button>
 
-                <button class="next">
+                <button class="next" id="nextBtn">
                     <svg viewBox="0 0 24 24">
                         <polygon points="5 4 15 12 5 20 5 4"></polygon>
                         <line x1="19" y1="5" x2="19" y2="19"></line>
@@ -155,6 +156,85 @@
         window.location.href = "login.html";
     }else if(currentProfile == null){
         window.location.href = "profiles.html";
-    }  
+    }else{
+        const showID = localStorage.getItem('showID');
+        const epNo = parseInt(localStorage.getItem('episodeNo'));
+        const audioType = localStorage.getItem('episodeAudio');
+        const subbedEpisodes = localStorage.getItem('subbedEpisodes').split("},");
+        const dubbedEpisodes = localStorage.getItem('dubbedEpisodes').split("},");
+
+        for(var cntr = 0; cntr < subbedEpisodes.length; cntr++){
+            if(subbedEpisodes[cntr].substr(subbedEpisodes[cntr].length - 1) != '}'){
+                subbedEpisodes[cntr] += '}';
+            }
+            if(dubbedEpisodes[cntr].substr(dubbedEpisodes[cntr].length - 1) != '}'){
+                dubbedEpisodes[cntr] += '}';
+            }
+        }
+
+        if(audioType == "dub"){
+            var currentEpisode = JSON.parse(dubbedEpisodes[epNo]);
+            $('#episodeName').html(currentEpisode.show + ' <span>'+currentEpisode.name+'</span>');
+            $('#videoURL').attr('src', currentEpisode.url);
+
+            if(epNo != 0){
+                $('#prevBtn').attr('onclick', 'playNow('+(epNo-1)+', `dub`);');
+            }else{
+                $('#prevBtn').attr('hidden', 'true');
+            }
+            if(epNo < dubbedEpisodes.length - 1){
+                $('#nextBtn').attr('onclick', 'playNow('+(epNo+1)+', `dub`);');
+            }else{
+                $('#nextBtn').attr('hidden', 'true');
+            }
+        }else{
+            var currentEpisode = JSON.parse(subbedEpisodes[epNo]);
+            $('#episodeName').html(currentEpisode.show + ' <span>'+currentEpisode.name+'</span>');
+            $('#videoURL').attr('src', currentEpisode.url);
+
+            if(epNo != 0){
+                $('#prevBtn').attr('onclick', 'playNow('+(epNo-1)+', `sub`);');
+            }else{
+                $('#prevBtn').attr('hidden', 'true');
+            }
+            if(epNo < subbedEpisodes.length - 1){
+                $('#nextBtn').attr('onclick', 'playNow('+(epNo+1)+', `sub`);');
+            }else{
+                $('#nextBtn').attr('hidden', 'true');
+            }
+        }
+        $('#backButton').attr('onclick', 'showDetails(`'+showID+'`)');
+        document.getElementById("mainVideo").load();
+        document.getElementById("mainVideo").play();
+    }
+
+    $('.progress-bar').hover(function(e){
+        $this = $(this);
+        var widthHovered = e.pageX - $this.offset().left;
+        var calc = (widthHovered / this.offsetWidth * video.duration);
+        $('.elapsed-time').css('margin-left', (widthHovered+12));
+        $('.elapsed-time').text(convertTime(calc.toFixed(0)));
+        $('.elapsed-time').removeAttr('hidden');
+    });
+
+    $('.progress-bar').mouseout(()=>{
+        $('.elapsed-time').attr('hidden', 'true');
+    })
+
+    function convertTime(totalSeconds) {
+        const time = new Date(null);
+        time.setUTCSeconds(totalSeconds);
+        let hours = null;
+        if(totalSeconds >= 3600) {
+            hours = (time.getUTCHours().toString()).padStart('2', '0');
+        }
+        let minutes = (time.getUTCMinutes().toString()).padStart('2', '0');
+        let seconds = (time.getUTCSeconds().toString()).padStart('2', '0');
+        if(hours){
+            return `${hours ? hours : '00'}:${minutes}:${seconds}`;
+        }else{
+            return `${minutes}:${seconds}`;
+        }
+    }
 </script>
 </html>

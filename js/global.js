@@ -17,3 +17,9 @@ function showDetails(showID) {
 	localStorage.setItem('showID', showID);
 	location.href = "details.html";
 }
+
+function playNow(epNo, audioType){
+	localStorage.setItem('episodeNo', epNo);
+	localStorage.setItem('episodeAudio', audioType);
+	window.location.href = "play.html";
+}

@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <div class="actions d-flex flex-start flex-middle">
-                    <a class="link-item">
+                    <a class="link-item" id="mainPlayBtn">
                         <i class="fa fa-play"></i>
                         <span>Play</span>
                     </a>
@@ -176,25 +176,11 @@
             </div>
 
             <div class="allEpisodes" id="subbedSection">  
-                <div class="episode">
-                    <h4 class="playIcon">
-                        <i class="fa fa-play"></i>
-                    </h4>
-                    <h4 class="episodeTitle">
-                        S1:E01 My Hero
-                    </h4>
-                </div>
+                
             </div>
 
             <div class="allEpisodes" id="dubbedSection" hidden>  
-                <div class="episode">
-                    <h4 class="playIcon">
-                        <i class="fa fa-play"></i>
-                    </h4>
-                    <h4 class="episodeTitle">
-                        S1:E01 My Hero
-                    </h4>
-                </div>
+                
             </div>
 
         </section>
@@ -244,13 +230,15 @@
             $('#audioType').val("dubbed");
             $('#subbedSection').attr('hidden', 'true');
             $('#dubbedSection').removeAttr('hidden');
+            $('#mainPlayBtn').attr('onclick', 'playNow(0,  "dub");');
         }else{
             $('#dubbedSection').attr('hidden', 'true');
             $('#subbedSection').removeAttr('hidden');
+            $('#mainPlayBtn').attr('onclick', 'playNow(0,  "sub");');
         }
 
         const showID = localStorage.getItem("showID");
-        db.collection("medias").doc(showID).get().then((doc)=>{
+        db.collection("medias").doc(showID).get().then(async (doc)=>{
             var data = doc.data();
             $('#showSummary').text(data.summary);
             if(data.mediaType == "anime"){
@@ -260,6 +248,44 @@
                     $('#seasonList').append('<option value="season'+cntr+'">Season '+cntr+'</option>');
                 }
                 $('#showStatus').html("<span class='name'>Status:</span> "+data.status);
+
+                await doc.ref.collection("season1").orderBy("name").get().then((docSnap)=>{
+                    var subbedEpisodes = [];
+                    var dubbedEpisodes = [];
+                    var count = 0;
+                    docSnap.forEach((episode)=>{
+                        var epData = episode.data();
+                        if(epData.dubbedURL != ""){
+                            $('#dubbedSection').append(
+                                '<div class="episode">'+
+                                    '<h4 class="playIcon" onclick="playNow('+count+', `dub`);">'+
+                                        '<i class="fa fa-play"></i>'+
+                                    '</h4>'+
+                                    '<h4 class="episodeTitle">'+
+                                        epData.name+
+                                    '</h4>'+
+                                '</div>'
+                            );
+                            dubbedEpisodes.push(JSON.stringify({"name":epData.name,"url":epData.dubbedURL,"show":data.name}));
+                        }
+                        if(epData.subbedURL != ""){
+                            $('#subbedSection').append(
+                                '<div class="episode">'+
+                                    '<h4 class="playIcon" onclick="playNow('+count+',  `sub`);">'+
+                                        '<i class="fa fa-play"></i>'+
+                                    '</h4>'+
+                                    '<h4 class="episodeTitle">'+
+                                        epData.name+
+                                    '</h4>'+
+                                '</div>'
+                            );
+                            subbedEpisodes.push(JSON.stringify({"name":epData.name,"url":epData.subbedURL,"show":data.name}));
+                        }
+                        count++;
+                    });
+                    localStorage.setItem('subbedEpisodes', subbedEpisodes);
+                    localStorage.setItem('dubbedEpisodes', dubbedEpisodes);
+                });
             }else{
                 $('#showType').html("<span class='name'>Type:</span> Movie");
                 $('#showSeason').html("<span class='name'>Duration:</span> "+data.duration);
@@ -372,10 +398,12 @@
             localStorage.setItem("audioPreference", "dubbed");
             $('#subbedSection').attr('hidden', 'true');
             $('#dubbedSection').removeAttr('hidden');
+            $('#mainPlayBtn').attr('onclick', 'playNow(0,  "dub");');
         }else{
-            localStorage.setItem("audioPreference", "dubbed");
+            localStorage.setItem("audioPreference", "subbed");
             $('#dubbedSection').attr('hidden', 'true');
             $('#subbedSection').removeAttr('hidden');
+            $('#mainPlayBtn').attr('onclick', 'playNow(0,  "sub");');
         }
     }
 </script>
