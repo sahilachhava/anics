@@ -181,8 +181,8 @@
                 <div class="synopsis m-t-20" style="max-width: 500px;">
                     <p id="trendingSummary"></p>
                 </div>
-                <div class="buttons-container" style="margin-top: 20px;" id="trendingPlayBtn">
-                    <button class="play-button">
+                <div class="buttons-container" style="margin-top: 20px;">
+                    <button class="play-button" id="trendingPlayBtn">
                         <span>
                             <svg viewBox="0 0 24 24">
                                 <path d="M6 4l15 8-15 8z" fill="currentColor"></path>
@@ -327,7 +327,7 @@
             $("#trendingLogo").attr('src', data.logoURL);
 
             $("#trendingSummary").text(data.summary);
-            $("#trendingPlayBtn").attr('href', '#');
+            $("#trendingPlayBtn").attr('onclick', 'playTrending(`'+data.mediaID+'`);');
             $("#trendingInfoBtn").attr('onclick', 'showDetails(`'+data.mediaID+'`);');
         });
 

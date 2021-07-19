@@ -2,8 +2,8 @@
 <html>
 <head>
 	<title>Anics - Dashboard</title>
-        <link rel="shortcut icon" href="../assets/login/images/logo.png">
-        <link rel="icon" type="image/png" href="../assets/login/images/logo.png"/>
+        <link rel="shortcut icon" href="../assets/login/images/default.png">
+        <link rel="icon" type="image/png" href="assets/login/images/default.png"/>
         <link rel="stylesheet" type="text/css" href="assets/login/vendor/bootstrap/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" type="text/css" href="assets/login/vendor/animate/animate.css">
@@ -42,15 +42,10 @@
         <link href="../assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
         <link href="../assets/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
 </head>
-<body class="fixed-left">
 
+<body class="fixed-left">
 <!-- Loader -->
-<div id="preloader">
-    <div id="status">
-        <div class="spinner">   
-        </div>
-    </div>
-</div>
+<div id="preloader"><div id="status"><div class="spinner"></div></div></div>
 
 <!-- Begin page -->
 <div id="wrapper">
@@ -80,12 +75,7 @@
 </a>
 </li>
 
-<li>
-<a href="addtrending.html" class="waves-effect">
-    <i class="mdi mdi-star-circle"></i>
-    <span> Add Trending </span>
-</a>
-</li>
+
 
 <li>
 <a href="addepisode.html" class="waves-effect">
@@ -117,13 +107,7 @@
 </ul>
 </li>
 
-<li class="has_sub">
-<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-box"></i> <span> Users </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
-<ul class="list-unstyled">
-<li><a href="adduser.html">Add User</a></li>
-<li><a href="users.html">Manage Users</a></li>
-</ul>
-</li>
+
 
 <li>
 <a href="suggestions.html" class="waves-effect">
@@ -132,12 +116,7 @@
 </a>
 </li>
 
-<li>
-<a href="feedback.html" class="waves-effect">
-<i class="mdi mdi-message-text"></i>
-<span> Feedbacks </span>
-</a>
-</li>
+
 
 <li>
 <a href="reports.html" class="waves-effect">
@@ -155,7 +134,6 @@
 <!-- Start right Content here -->
 <div class="content-page">
 <div class="content">
-
 <!-- Top Bar Start -->
 <div class="topbar" id="topMenu">
 
@@ -167,107 +145,75 @@
 <div class="row">
 <div class="col-sm-12">
 <div class="page-title-box">
-<h4 class="page-title">Admin's Dashboard</h4>
+<h4 class="page-title">Add Bulk Episodes</h4>
 </div>
 </div>
 </div>
 <!-- end page title -->
 <!-- dashboard content -->
 <div class="row">
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
+<div class="col-12">
 <div class="card m-b-30">
 <div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round">
-<i class="mdi mdi-panda"></i>
-</div>
-</div>
-<div class="col-10 align-self-center text-center">
-<div class="m-l-10">
-<h5 class="mt-0 round-inner" id="anime">0</h5>
-<p class="mb-0 text-muted">Anime</p>           
+<h4 class="mt-0 header-title">Fill out the form</h4><br>			
+<form onsubmit="addBulk();return false;">
+
+<div class="form-group row">
+<label for="example-text-input" class="col-sm-2 col-form-label">Anime</label>
+<div class="col-sm-6">
+<select class="form-control" id="animeList" onchange="updateSeasons(this);">
+    <option value="">Select Anime</option>
+</select>
 </div>
 </div>
 
+<div class="form-group row" id="seasonRow">
+<label for="example-text-input" class="col-sm-2 col-form-label">Season</label>
+<div class="col-sm-6">
+<select class="form-control" id="seasonList">
+    <option value="">Select Season</option>
+</select>
 </div>
 </div>
-</div>
-</div>
-<!-- Column -->
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
-<div class="card m-b-30">
-<div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round">
-<i class="mdi mdi-movie"></i>
-</div>
-</div>
-<div class="col-10 text-center align-self-center">
-<div class="m-l-10 ">
-<h5 class="mt-0 round-inner" id="movies">
-0
-</h5>
-<p class="mb-0 text-muted">Movies</p>
-</div>
-</div>                                                       
-</div>
-</div>
-</div>
-</div>
-<!-- Column -->
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
-<div class="card m-b-30">
-<div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round ">
-<i class="mdi mdi-account-box"></i>
-</div>
-</div>
-<div class="col-10 align-self-center text-center">
-<div class="m-l-10 ">
-<h5 class="mt-0 round-inner" id="users">
-0
-</h5>
-<p class="mb-0 text-muted">Users</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Column -->
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
-<div class="card m-b-30">
-<div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round">
-<i class="mdi mdi-checkbox-multiple-marked-circle-outline"></i>
-</div>
-</div>
-<div class="col-10 align-self-center text-center">
-<div class="m-l-10">
-<h5 class="mt-0 round-inner" id="suggestions">
-0
-</h5>
-<p class="mb-0 text-muted">Suggestions</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Column -->
 
-<!-- 4 bulletins end here -->
+<div class="form-group row">
+<label for="example-text-input" class="col-sm-2 col-form-label">Name CSV</label>
+<div class="col-sm-6">
+<input id="nameCSV" type="file" accept=".csv" required>
+</div>
+</div>
+
+
+<div class="form-group row">
+<label for="example-text-input" class="col-sm-2 col-form-label">Sub CSV</label>
+<div class="col-sm-6">
+<input id="subCSV" type="file" accept=".csv" required>
+</div>
+</div>
+
+
+<div class="form-group row">
+<label for="example-text-input" class="col-sm-2 col-form-label">Dub CSV</label>
+<div class="col-sm-6">
+<input id="dubCSV" type="file" accept=".csv" required>
+</div>
+</div>
+
+<div class="form-group">
+<label for="example-time-input" class="col-sm-2 col-form-label" ></label>
+<div class="col-sm-10">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<button type="submit" id="submitBtn" class="btn btn-primary waves-effect waves-light">Add Bulk</button>
+<button type="reset" class="btn btn-secondary waves-effect m-l-5">Reset Form</button>
+</div>
+</div>
+</form>
+</div>
+</div>
+</div> <!-- end col -->
+</div> <!-- end row -->
 
 <!-- dashboard content end-->
 <footer class="footer" id="footer">
@@ -359,7 +305,6 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
 });
 </script>
 <!-- end login scripts -->
-
 </body>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
@@ -367,6 +312,7 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-firestore.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-storage.js"></script>
 <script type="text/javascript" src="../assets/firebase.js"></script>
+<script type="text/javascript" src="../assets/papaparse.min.js"></script>
 <script type="text/javascript" src="../assets/externalHTML.js"></script>
 <script type="text/javascript">
 	//loadHeader();
@@ -378,21 +324,161 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
     if(uid==null){
         window.location.href="../index.html";
     }else{
-    	db.collection("medias").where("mediaType", "==", "anime").get().then(function(snapshot){
-    		document.getElementById('anime').innerHTML = snapshot.size;
-    	});
-
-        db.collection("medias").where("mediaType", "==", "movie").get().then(function(snapshot){
-            document.getElementById('movies').innerHTML = snapshot.size;
+        db.collection("medias").where("mediaType", "==", "anime").where("status", "==", "Ongoing").get().then((docs)=>{
+            docs.forEach((doc)=>{
+                var data = doc.data();
+                $("#animeList").append('<option value="'+doc.id+'">'+data.name+'</option>');
+            })
         });
+    }
 
-        db.collection("users").get().then(function(snapshot){
-            document.getElementById('users').innerHTML = snapshot.size;
-        });
+    function updateSeasons(mediaID){
+        db.collection("medias").doc(mediaID.value).get().then((doc)=>{
+            var seasons = doc.data().seasons;
+            for(var i = 1; i <= seasons; i++){
+                $("#seasonList").append('<option value="season'+i+'">Season '+i+'</option>');
+            }
+        }).then(()=>{
+            $("#seasonRow").removeAttr("hidden");
+        })
+    }
 
-        db.collection("suggestions").get().then(function(snapshot){
-            document.getElementById('suggestions').innerHTML = snapshot.size;
-        });
+    var episodeDetails = [];
+    var subLinks = [];
+    var dubLinks = [];
+    var allEpisodes = [];
+
+    function addBulk(){
+        $('#submitBtn').html('Uploading Bulk...').addClass('disabled');
+
+        $('#nameCSV').parse({
+			config: {
+				delimiter: "auto",
+				complete: parseNameData,
+			},
+			complete: function()
+			{
+				$("#subCSV").parse({
+                    config: {
+                        delimiter: "auto",
+                        complete: parseSubData,
+                    },
+                    complete: function()
+                    {
+                        $("#dubCSV").parse({
+                            config: {
+                                delimiter: "auto",
+                                complete: parseDubData,
+                            },
+                            complete: function()
+                            {
+                                for(var epCntr = 0; epCntr < episodeDetails.length; epCntr++){
+                                    var episode = [episodeDetails[epCntr].no, episodeDetails[epCntr].name, "", ""];
+                                    for(var sCntr = 0; sCntr < subLinks.length; sCntr++){
+                                        if(subLinks[sCntr].no == episodeDetails[epCntr].no){
+                                            episode[2] = subLinks[sCntr].sub;
+                                            break;
+                                        }
+                                    }
+                                    for(var dCntr = 0; dCntr < dubLinks.length; dCntr++){
+                                        if(dubLinks[dCntr].no == episodeDetails[epCntr].no){
+                                            episode[3] = dubLinks[dCntr].dub;
+                                            break;
+                                        }
+                                    }
+                                    allEpisodes.push(episode);
+                                }
+                                uploadEpisodes();
+                            }
+                        });
+                    }
+                });
+			}
+		});
+    }
+
+    function parseNameData(results){
+		var data = results.data;
+		for(var i = 1; i < data.length - 1; i++){
+			var row = data[i];
+			var cells = row.join(",").split(","); 
+            
+            var no = cells[2];
+            var name = cells[3];
+            no = no.replaceAll("\"", "");
+            name = name.replaceAll("\"", "");
+
+            episodeDetails.push({
+                "no": no,
+                "name": name
+            });
+		}
+	}
+
+    function parseSubData(results){
+		var data = results.data;
+		for(var i = 1; i < data.length - 1; i++){
+			var row = data[i];
+			var cells = row.join(",").split(","); 
+
+            var no = cells[2];
+            no = no.replaceAll(" ", "");
+            no = no.replaceAll("EP", "");
+            no = no.replaceAll("SUB", "");
+            no = no.replaceAll(/(?:\r\n|\r|\n)/g, '');
+            no = no.replaceAll("\"", "");
+
+            var link = cells[6];
+            link = link.replaceAll("\"", "");
+            
+            subLinks.push({
+                "no": no,
+                "sub": link
+            });
+        }
+	}
+
+    function parseDubData(results){
+		var data = results.data;
+		for(var i = 1; i < data.length - 1; i++){
+			var row = data[i];
+			var cells = row.join(",").split(","); 
+
+            var no = cells[2];
+            no = no.replaceAll(" ", "");
+            no = no.replaceAll("EP", "");
+            no = no.replaceAll("DUB", "");
+            no = no.replaceAll(/(?:\r\n|\r|\n)/g, '');
+            no = no.replaceAll("\"", "");
+
+            var link = cells[6];
+            link = link.replaceAll("\"", "");
+            
+            dubLinks.push({
+                "no": no,
+                "dub": link
+            });
+        }
+	}
+
+    function uploadEpisodes(){
+        var animeID = $('#animeList').val();
+        var season = $('#seasonList').val();
+        var timeStamp = firebase.firestore.Timestamp.now().toDate();
+
+        for(var i = 0; i < allEpisodes.length; i++){
+            var episode = allEpisodes[i];
+            var epName = "S" + season.substr(6, 10).padStart('2', '0') + ":E" + episode[0].padStart('2', '0') + " " + episode[1];
+
+            db.collection("medias").doc(animeID).collection(season).doc(epName).set({
+                'name': epName,
+                'subbedURL': episode[2],
+                'dubbedURL': episode[3],
+                'timeStamp': timeStamp
+            }).then((doc)=>{
+                console.log(epName + " Added Succesfully");
+            });
+        }
     }
 </script>
 </html>

@@ -1,56 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Anics - Dashboard</title>
-        <link rel="shortcut icon" href="../assets/login/images/logo.png">
-        <link rel="icon" type="image/png" href="../assets/login/images/logo.png"/>
-        <link rel="stylesheet" type="text/css" href="assets/login/vendor/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/login/vendor/animate/animate.css">
-        <link rel="stylesheet" type="text/css" href="assets/login/vendor/css-hamburgers/hamburgers.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/login/vendor/select2/select2.min.css">
-        <link rel="stylesheet" type="text/css" href="assets/login/css/util.css">
-        <link rel="stylesheet" type="text/css" href="assets/login/css/main.css">
-        <link href="../assets/plugins/morris/morris.css" rel="stylesheet">
-        <link href="../assets/plugins/alertify/css/alertify.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/icons.css" rel="stylesheet" type="text/css">
-        <link href="../assets/css/style.css" rel="stylesheet" type="text/css">
-        <link href="../assets/plugins/prism/prism.css" rel="stylesheet" type="text/css">
-        <link href="../assets/plugins/ion-rangeslider/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/ion-rangeslider/ion.rangeSlider.skinModern.css" rel="stylesheet" type="text/css"/>
-        <link href="../assets/plugins/bootstrap-rating/bootstrap-rating.css" rel="stylesheet" type="text/css">
-        <link href="../assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/c3/c3.min.css" rel="stylesheet" type="text/css"  />
-        <link rel="stylesheet" href="../assets/plugins/chartist/css/chartist.min.css">
-        <link href="../assets/plugins/timepicker/tempusdominus-bootstrap-4.css" rel="stylesheet" />
-        <link href="../assets/plugins/timepicker/bootstrap-material-datetimepicker.css" rel="stylesheet">
-        <link href="../assets/plugins/clockpicker/jquery-clockpicker.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/colorpicker/asColorPicker.min.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
-        <link href="../assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
-        <link href="../assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
-        <link href="../assets/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
-        <link href="../assets/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
-        <link href="../assets/plugins/dropify/css/dropify.min.css" rel="stylesheet">
-        <link type="text/css" href="../assets/plugins/x-editable/css/bootstrap-editable.css" rel="stylesheet">
-        <link href="../assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
-        <link href="../assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
-        <link href="../assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
+<title>Anics - Dashboard</title>
+<link rel="shortcut icon" href="../assets/login/images/default.png">
+<link rel="icon" type="image/png" href="assets/login/images/default.png"/>
+<link rel="stylesheet" type="text/css" href="assets/login/vendor/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="assets/login/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" type="text/css" href="assets/login/vendor/animate/animate.css">
+<link rel="stylesheet" type="text/css" href="assets/login/vendor/css-hamburgers/hamburgers.min.css">
+<link rel="stylesheet" type="text/css" href="assets/login/vendor/select2/select2.min.css">
+<link rel="stylesheet" type="text/css" href="assets/login/css/util.css">
+<link rel="stylesheet" type="text/css" href="assets/login/css/main.css">
+<link href="../assets/plugins/morris/morris.css" rel="stylesheet">
+<link href="../assets/plugins/alertify/css/alertify.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/icons.css" rel="stylesheet" type="text/css">
+<link href="../assets/css/style.css" rel="stylesheet" type="text/css">
+<link href="../assets/plugins/prism/prism.css" rel="stylesheet" type="text/css">
+<link href="../assets/plugins/ion-rangeslider/ion.rangeSlider.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/plugins/ion-rangeslider/ion.rangeSlider.skinModern.css" rel="stylesheet" type="text/css"/>
+<link href="../assets/plugins/bootstrap-rating/bootstrap-rating.css" rel="stylesheet" type="text/css">
+<link href="../assets/plugins/fullcalendar/css/fullcalendar.min.css" rel="stylesheet" />
+<link href="../assets/plugins/c3/c3.min.css" rel="stylesheet" type="text/css"  />
+<link rel="stylesheet" href="../assets/plugins/chartist/css/chartist.min.css">
+<link href="../assets/plugins/timepicker/tempusdominus-bootstrap-4.css" rel="stylesheet" />
+<link href="../assets/plugins/timepicker/bootstrap-material-datetimepicker.css" rel="stylesheet">
+<link href="../assets/plugins/clockpicker/jquery-clockpicker.min.css" rel="stylesheet" />
+<link href="../assets/plugins/colorpicker/asColorPicker.min.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/select2/select2.min.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+<link href="../assets/plugins/bootstrap-datepicker/css/bootstrap-datepicker.min.css" rel="stylesheet">
+<link href="../assets/plugins/bootstrap-touchspin/css/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
+<link href="../assets/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
+<link href="../assets/plugins/dropzone/dist/dropzone.css" rel="stylesheet" type="text/css">
+<link href="../assets/plugins/dropify/css/dropify.min.css" rel="stylesheet">
+<link type="text/css" href="../assets/plugins/x-editable/css/bootstrap-editable.css" rel="stylesheet">
+<link href="../assets/plugins/jvectormap/jquery-jvectormap-2.0.2.css" rel="stylesheet">
+<link href="../assets/plugins/sweet-alert2/sweetalert2.min.css" rel="stylesheet" type="text/css">
+<link href="../assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
+<link href="../assets/plugins/RWD-Table-Patterns/dist/css/rwd-table.min.css" rel="stylesheet" type="text/css" media="screen">
 </head>
-<body class="fixed-left">
 
+<body class="fixed-left">
 <!-- Loader -->
-<div id="preloader">
-    <div id="status">
-        <div class="spinner">   
-        </div>
-    </div>
-</div>
+<div id="preloader"><div id="status"><div class="spinner"></div></div></div>
 
 <!-- Begin page -->
 <div id="wrapper">
@@ -155,119 +150,48 @@
 <!-- Start right Content here -->
 <div class="content-page">
 <div class="content">
-
-<!-- Top Bar Start -->
 <div class="topbar" id="topMenu">
 
 </div>
-<!-- Top Bar End -->
 <div class="page-content-wrapper ">
 <div class="container-fluid">
 <!-- page title start -->
 <div class="row">
 <div class="col-sm-12">
 <div class="page-title-box">
-<h4 class="page-title">Admin's Dashboard</h4>
+<h4 class="page-title">Reports</h4>
 </div>
 </div>
 </div>
 <!-- end page title -->
 <!-- dashboard content -->
+
 <div class="row">
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
+<div class="col-12">
 <div class="card m-b-30">
 <div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round">
-<i class="mdi mdi-panda"></i>
-</div>
-</div>
-<div class="col-10 align-self-center text-center">
-<div class="m-l-10">
-<h5 class="mt-0 round-inner" id="anime">0</h5>
-<p class="mb-0 text-muted">Anime</p>           
-</div>
-</div>
+<h4 class="mt-0 header-title" id="totalCount">Total Reports: 0</h4> <br>
+<table id="exampleTable1" class="table table-striped table-bordered" cellspacing="0" width="100%">
+<thead>
+<tr>
+<th> Report Type </th>
+<th> Show </th>
+<th> Episode </th>
+<th> Audio </th>
+<th> Issue </th>
+<th> Date </th>
+<th> Status </th>
+<th> Update </th>
+</tr>
+</thead>
+<tbody class="displayContent">
+</tbody>
+</table>
 
 </div>
 </div>
-</div>
-</div>
-<!-- Column -->
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
-<div class="card m-b-30">
-<div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round">
-<i class="mdi mdi-movie"></i>
-</div>
-</div>
-<div class="col-10 text-center align-self-center">
-<div class="m-l-10 ">
-<h5 class="mt-0 round-inner" id="movies">
-0
-</h5>
-<p class="mb-0 text-muted">Movies</p>
-</div>
-</div>                                                       
-</div>
-</div>
-</div>
-</div>
-<!-- Column -->
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
-<div class="card m-b-30">
-<div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round ">
-<i class="mdi mdi-account-box"></i>
-</div>
-</div>
-<div class="col-10 align-self-center text-center">
-<div class="m-l-10 ">
-<h5 class="mt-0 round-inner" id="users">
-0
-</h5>
-<p class="mb-0 text-muted">Users</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Column -->
-<!-- Column -->
-<div class="col-md-6 col-lg-6 col-xl-3">
-<div class="card m-b-30">
-<div class="card-body">
-<div class="d-flex flex-row">
-<div class="col-3 align-self-center">
-<div class="round">
-<i class="mdi mdi-checkbox-multiple-marked-circle-outline"></i>
-</div>
-</div>
-<div class="col-10 align-self-center text-center">
-<div class="m-l-10">
-<h5 class="mt-0 round-inner" id="suggestions">
-0
-</h5>
-<p class="mb-0 text-muted">Suggestions</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Column -->
-
-<!-- 4 bulletins end here -->
+</div> <!-- end col -->
+</div> <!-- end row -->
 
 <!-- dashboard content end-->
 <footer class="footer" id="footer">
@@ -359,7 +283,6 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
 });
 </script>
 <!-- end login scripts -->
-
 </body>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.15.0/firebase-analytics.js"></script>
@@ -369,29 +292,80 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
 <script type="text/javascript" src="../assets/firebase.js"></script>
 <script type="text/javascript" src="../assets/externalHTML.js"></script>
 <script type="text/javascript">
-	//loadHeader();
-	//loadSideMenu();
-	loadTopMenu();
-	//loadFooter();
+    //loadHeader();
+    //loadSideMenu();
+    loadTopMenu();
+    //loadFooter();
 
     var uid = sessionStorage.getItem("adminUID");
     if(uid==null){
         window.location.href="../index.html";
     }else{
-    	db.collection("medias").where("mediaType", "==", "anime").get().then(function(snapshot){
-    		document.getElementById('anime').innerHTML = snapshot.size;
-    	});
+        db.collection("reports").get().then(async function(docs){
+            var count = 0;
+            var tabData = [];
+            await docs.forEach(function(doc) {
+                if(doc.exists){
+                    count += 1;
+                    var docData = doc.data();
+                    var date = getDate(docData.timeStamp);
+                    tabData.push({
+                        'reportType': docData.reportType,
+                        'show': docData.showName,
+                        'episode': docData.episodeName,
+                        'date': date,
+                        'audio':  docData.audioType,
+                        'issue': docData.issue,
+                        'status': docData.status,
+                        'statusWithID': doc.id + "+" + docData.status,
+                    });
+                }else{
+                    alert("No Reports Found!");
+                    window.location.href="index.html";
+                }
+            })
+            document.getElementById('totalCount').innerHTML = "Total Reports: " + count;
+            return tabData;
+        }).then((tabData)=>{
+            $('#exampleTable1').dataTable({
+                "ordering": true,
+                "data": tabData,
+                "columns": [
+                    {"data": "reportType"},
+                    {'data':'show'},
+                    {'data':'episode'},
+                    {'data':'audio'},
+                    {'data':'issue'},
+                    {'data':'date'},
+                    {'data':'status'},
+                    {
+                        "data": "statusWithID",
+                        "render": function (data){
+                            var statusWithID = data.split("+");
+                            var docID = statusWithID[0];
+                            var status = statusWithID[1];
 
-        db.collection("medias").where("mediaType", "==", "movie").get().then(function(snapshot){
-            document.getElementById('movies').innerHTML = snapshot.size;
-        });
+                            if(status == "Submitted"){
+                                return '<select class="form-control" onchange="updateStatus(this);"><option value="Submitted+'+docID+'" selected>Submitted</option><option value="Resolved+'+docID+'">Resolved</option></select>';
+                            }else{
+                                return '<select class="form-control" onchange="updateStatus(this);"><option value="Submitted+'+docID+'">Submitted</option><option value="Resolved+'+docID+'" selected>Resolved</option></select>';
+                            }
+                        }
+                    },
+                ]
+                });
+            });
+    }
 
-        db.collection("users").get().then(function(snapshot){
-            document.getElementById('users').innerHTML = snapshot.size;
-        });
+    function updateStatus(data) {
+        var statusWithID = data.value.split("+");
+        var newStatus = statusWithID[0];
+        var docID = statusWithID[1];
 
-        db.collection("suggestions").get().then(function(snapshot){
-            document.getElementById('suggestions').innerHTML = snapshot.size;
+        db.collection("reports").doc(docID).update({
+            'status': newStatus,
+        }).then(()=>{
+            window.location.reload();
         });
     }
 </script>

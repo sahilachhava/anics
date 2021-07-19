@@ -85,6 +85,7 @@ document.addEventListener('keyup', (event) => {
             event.preventDefault();
         }
         playPause(); 
+        displayControls();
     }
     if (event.code === 'ArrowRight') {
         fastForwardButton.click();
@@ -116,7 +117,6 @@ document.addEventListener('keyup', (event) => {
     if (event.code === 'KeyF') {
         toggleFullScreen();
     }
-    displayControls();
 });
 
 video.addEventListener('click', () => {

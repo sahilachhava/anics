@@ -68,7 +68,7 @@
                     <h4 class="headline">
                         MEMBERSHIP & BILLING
                     </h4>
-                    <button class="button">Cancel Membership</button>
+                    <button class="button" id="membershipBtn" onclick="triggerMembership();">Cancel Membership</button>
                 </div>
                 <div class="right">
                     <div class="d-flex space-between">
@@ -98,7 +98,7 @@
                 </div>
                 <div class="right d-flex space-between">
                     <span class="membershipPlan" style="font-size: 18px;font-weight: 500;"></span>
-                    <a href="#" class="link-item">Change plan</a>
+                    <a href="#" class="link-item" hidden>Change plan</a>
                 </div>
                 <div class="right d-flex space-between" style="margin-left: 220px;">
                     <span class="membershipExpiry" style="font-size: 18px;font-weight: 500;"></span>
@@ -175,6 +175,7 @@
     const loginStatus = localStorage.getItem("loginStatus");
     const currentProfile = localStorage.getItem("userProfile");
     const avatar = localStorage.getItem("avatar");
+    var expiryDate = new Date(firebase.firestore.Timestamp.now().toDate());
 
     if(loginStatus != "1" || userID == null){
         window.location.href = "login.html";
@@ -188,12 +189,15 @@
         db.collection("users").doc(userID).get().then((doc)=>{
             var userData = doc.data();
             $('.email strong').text(userData.email);
-            if(userData.membership.membershipStatus){
+            var userExpiryDate = new Date(userData.membership.expiryDate.toDate());
+
+            if(userData.status != "Expired" && userExpiryDate > expiryDate){
                 $('.membership .button').text("Cancel Membership");
+                $('.membershipPlan').html(userData.membership.type + " Membership: <span style='color: green;'>ACTIVE</span>");
             }else{
                 $('.membership .button').text("Resume Membership");
+                $('.membershipPlan').html(userData.membership.type + " Membership: <span style='color: red;'>EXPIRED</span>");
             }
-            $('.membershipPlan').text(userData.membership.type + " Membership");
             $('.membershipExpiry').text("Expiry Date: "+ getDate(userData.membership.expiryDate));
         });
 
@@ -222,7 +226,35 @@
                     '</div>'
                 ));
             })
-        })
+        });
+
+        function triggerMembership(){
+            var status = $('#membershipBtn').text();
+            if(status == "Cancel Membership"){ 
+                $('#membershipBtn').text("Cancelling..").attr("disabled");
+
+                db.collection("users").doc(userID).update({
+                    'status': 'Expired'
+                }).then(()=>{
+                    window.location.href = "myAccount.html";
+                });
+            }else{
+                $('#membershipBtn').text("Resuming..").attr("disabled");
+                db.collection("users").doc(userID).get().then(async (doc)=>{
+                    var data = doc.data();
+                    var userExpiryDate = new Date(data.membership.expiryDate.toDate());
+                    if(userExpiryDate > expiryDate && data.membership.type != "Free"){
+                        await doc.ref.update({
+                            'status': 'Active'
+                        });
+                    }else{
+                        alert("Your free membership got expired, Please renew your plan!");
+                    }
+                }).then(()=>{
+                    window.location.href = "myAccount.html";
+                });
+            }
+        }
     }
 
     function openProfile(profileID){

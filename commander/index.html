@@ -106,7 +106,11 @@ auth.signInWithEmailAndPassword(email, password)
 		var user = auth.currentUser;
 		user.displayName = "admin";
 		sessionStorage.setItem('adminUID',user.uid);
-		window.location.href="dashboard/index.html";
+		if(email == "sub-admin@anics.xyz"){
+			window.location.href="sub-admin/index.html";
+		}else{
+			window.location.href="dashboard/index.html";
+		}
 	})
 	.catch(function(error) {
 		var errorCode = error.code;

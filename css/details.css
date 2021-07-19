@@ -131,16 +131,16 @@
     cursor: pointer;
 }
 .episode .playIcon i {
-    font-size: 32px;
-    height: 75px;
-    width: 75px;
+    font-size: 18px;
+    height: 35px;
+    width: 35px;
     border: 2px solid white;
     border-radius: 50%;
-    padding: 20px 0px 0px 23px;
+    padding: 7px 0px 0px 10px;
 }
 .episode .episodeTitle {
     float: center;
-    font-size: 32px;
-    margin-left: 120px;
-    margin-top: 15px;
+    font-size: 18px;
+    margin-left: 60px;
+    margin-top: 8px;
 }

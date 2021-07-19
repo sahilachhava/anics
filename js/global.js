@@ -18,6 +18,11 @@ function showDetails(showID) {
 	location.href = "details.html";
 }
 
+function playTrending(showID) {
+	localStorage.setItem('showID', showID);
+	location.href = "details.html?play";
+}
+
 function playNow(epNo, audioType){
 	localStorage.setItem('episodeNo', epNo);
 	localStorage.setItem('episodeAudio', audioType);
