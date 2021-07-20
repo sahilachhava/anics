@@ -202,14 +202,14 @@
 <div class="form-group row">
 <label for="example-text-input" class="col-sm-2 col-form-label">Sub URL</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" placeholder="Sub Episode URL" value="" id="sub" required>
+<input class="form-control" type="text" placeholder="Sub Episode URL" value="" id="sub">
 </div>
 </div>
 
 <div class="form-group row">
 <label for="example-text-input" class="col-sm-2 col-form-label">Dub URL</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" placeholder="Dub Episode URL" value="" id="dub" required>
+<input class="form-control" type="text" placeholder="Dub Episode URL" value="" id="dub">
 </div>
 </div>
 
@@ -358,7 +358,7 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
 
     function updateName(season){
         var episodeName = season.value.substr(6, 10);
-        document.getElementById('name').value = "S" + episodeName + ":E";
+        document.getElementById('name').value = "S" + episodeName.padStart("2", "0") + ":E";
     }
 
     function addEpisode(){
@@ -367,8 +367,8 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
         var docID = document.getElementById("animeList").value;
         var season = document.getElementById('seasonList').value;
     	var name = document.getElementById('name').value;
-        var subURL = document.getElementById('sub').value;
-        var dubURL = document.getElementById('dub').value;
+        var subURL = document.getElementById('sub').value ? document.getElementById('sub').value : "";
+        var dubURL = document.getElementById('dub').value ? document.getElementById('dub').value : "";
         var timeStamp = firebase.firestore.Timestamp.now().toDate();
 
     	db.collection("medias").doc(docID).collection(season).doc(name).set({

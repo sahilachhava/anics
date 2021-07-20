@@ -356,9 +356,8 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
         var year = document.getElementById('year').value;
         var duration = document.getElementById('duration').value;
         var summary = document.getElementById('summary').value;
-        var subLink = document.getElementById('sub').value;
-        var dubLink = document.getElementById('dub').value;
-        
+        var subLink = document.getElementById('sub').value ? document.getElementById('sub').value : "";
+        var dubLink = document.getElementById('dub').value ? document.getElementById('dub').value : "";
         var timeStamp = firebase.firestore.Timestamp.now().toDate();
         var poster = document.getElementById('poster').files[0];
         var fileExtension = poster.name.split('.')[1];

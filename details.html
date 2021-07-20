@@ -362,7 +362,7 @@
         await db.collection("medias").doc(showID).collection(selectedSeason).orderBy("name").get().then((docSnap)=>{
             var subbedEpisodes = [];
             var dubbedEpisodes = [];
-            var count = 0;
+            var subCount = 0, dubCount = 0;
             $('#subbedSection').empty();
             $('#dubbedSection').empty();
             docSnap.forEach((episode)=>{
@@ -370,30 +370,31 @@
                 if(epData.dubbedURL != ""){
                     $('#dubbedSection').append(
                         '<div class="episode">'+
-                            '<h4 class="playIcon" onclick="playNow('+count+', `dub`);">'+
+                            '<h4 class="playIcon" onclick="playNow('+dubCount+', `dub`);">'+
                                 '<i class="fa fa-play-circle"></i>'+
                             '</h4>'+
-                            '<h4 class="episodeTitle" onclick="playNow('+count+', `dub`);">'+
+                            '<h4 class="episodeTitle" onclick="playNow('+dubCount+', `dub`);">'+
                                 epData.name+
                             '</h4>'+
                         '</div>'
                     );
                     dubbedEpisodes.push(JSON.stringify({"name":epData.name,"url":epData.dubbedURL,"show":showName}));
+                    dubCount++;
                 }
                 if(epData.subbedURL != ""){
                     $('#subbedSection').append(
                         '<div class="episode">'+
-                            '<h4 class="playIcon" onclick="playNow('+count+',  `sub`);">'+
+                            '<h4 class="playIcon" onclick="playNow('+subCount+',  `sub`);">'+
                                 '<i class="fa fa-play-circle"></i>'+
                             '</h4>'+
-                            '<h4 class="episodeTitle" onclick="playNow('+count+', `sub`);">'+
+                            '<h4 class="episodeTitle" onclick="playNow('+subCount+', `sub`);">'+
                                 epData.name+
                             '</h4>'+
                         '</div>'
                     );
                     subbedEpisodes.push(JSON.stringify({"name":epData.name,"url":epData.subbedURL,"show":showName}));
+                    subCount++;
                 }
-                count++;
             });
             localStorage.setItem('subbedEpisodes', subbedEpisodes);
             localStorage.setItem('dubbedEpisodes', dubbedEpisodes);

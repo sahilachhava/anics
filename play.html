@@ -164,10 +164,14 @@
         const subbedEpisodes = localStorage.getItem('subbedEpisodes').split("},");
         const dubbedEpisodes = localStorage.getItem('dubbedEpisodes').split("},");
 
+        $('#backButton').attr('onclick', 'showDetails(`'+showID+'`)');
+
         for(var cntr = 0; cntr < subbedEpisodes.length; cntr++){
             if(subbedEpisodes[cntr].substr(subbedEpisodes[cntr].length - 1) != '}'){
                 subbedEpisodes[cntr] += '}';
             }
+        }
+        for(var cntr = 0; cntr < dubbedEpisodes.length; cntr++){
             if(dubbedEpisodes[cntr].substr(dubbedEpisodes[cntr].length - 1) != '}'){
                 dubbedEpisodes[cntr] += '}';
             }
@@ -204,7 +208,6 @@
                 $('#nextBtn').attr('hidden', 'true');
             }
         }
-        $('#backButton').attr('onclick', 'showDetails(`'+showID+'`)');
         document.getElementById("mainVideo").load();
         document.getElementById("mainVideo").play();
     }

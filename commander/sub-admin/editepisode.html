@@ -198,14 +198,14 @@
 <div class="form-group row">
 <label for="example-text-input" class="col-sm-2 col-form-label">Sub URL</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" placeholder="Sub Episode URL" value="" id="sub" required>
+<input class="form-control" type="text" placeholder="Sub Episode URL" value="" id="sub">
 </div>
 </div>
 
 <div class="form-group row">
 <label for="example-text-input" class="col-sm-2 col-form-label">Dub URL</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" placeholder="Dub Episode URL" value="" id="dub" required>
+<input class="form-control" type="text" placeholder="Dub Episode URL" value="" id="dub">
 </div>
 </div>
 
@@ -354,8 +354,8 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
         var docID = getUrlParameter('showID');
         var season = getUrlParameter('season');
     	var name = document.getElementById('name').value;
-        var subURL = document.getElementById('sub').value;
-        var dubURL = document.getElementById('dub').value;
+        var subURL = document.getElementById('sub').value ? document.getElementById('sub').value : "";
+        var dubURL = document.getElementById('dub').value ? document.getElementById('dub').value : "";
 
     	db.collection("medias").doc(docID).collection(season).doc(name).update({
     		'name': name,
