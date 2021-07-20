@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.png">
+    <meta name="robots" content="noindex">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
@@ -68,7 +69,7 @@
                     <h4 class="headline">
                         MEMBERSHIP & BILLING
                     </h4>
-                    <button class="button" id="membershipBtn" onclick="triggerMembership();">Cancel Membership</button>
+                    <button hidden class="button" id="membershipBtn" onclick="triggerMembership();">Cancel Membership</button>
                 </div>
                 <div class="right">
                     <div class="d-flex space-between">
@@ -171,6 +172,13 @@
     <script src="commander/assets/firebase.js"></script>
 </body>
 <script>
+    $(document).ready(function () {  
+        setTimeout(()=>{
+            $('.preloaderBody').css('display', 'none');
+            $('.mainBody').removeAttr('hidden');
+        }, 1500);
+    });
+
     const userID = localStorage.getItem("userUID");
     const loginStatus = localStorage.getItem("loginStatus");
     const currentProfile = localStorage.getItem("userProfile");

@@ -75,7 +75,12 @@
 </a>
 </li>
 
-
+<li>
+<a href="addtrending.html" class="waves-effect">
+    <i class="mdi mdi-star-circle"></i>
+    <span> Add Trending </span>
+</a>
+</li>
 
 <li>
 <a href="addepisode.html" class="waves-effect">
@@ -107,7 +112,13 @@
 </ul>
 </li>
 
-
+<li class="has_sub">
+<a href="javascript:void(0);" class="waves-effect"><i class="mdi mdi-account-box"></i> <span> Users </span> <span class="float-right"><i class="mdi mdi-chevron-right"></i></span></a>
+<ul class="list-unstyled">
+<li><a href="adduser.html">Add User</a></li>
+<li><a href="users.html">Manage Users</a></li>
+</ul>
+</li>
 
 <li>
 <a href="suggestions.html" class="waves-effect">
@@ -116,7 +127,12 @@
 </a>
 </li>
 
-
+<li>
+<a href="feedback.html" class="waves-effect">
+<i class="mdi mdi-message-text"></i>
+<span> Feedbacks </span>
+</a>
+</li>
 
 <li>
 <a href="reports.html" class="waves-effect">
@@ -292,7 +308,7 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
                     var docData = doc.data();
                     tabData.push({
                         'docID': doc.id,
-                        'name': docData.name,
+                        'name': doc.id + "+" + docData.name,
                         'year': docData.year,
                         'posterURL': docData.posterURL,
                         'seasons': docData.seasons,
@@ -310,7 +326,16 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
                 "ordering": true,
                 "data": tabData,
                 "columns": [
-                    {'data':'name'},
+                    {
+                        "data": "name",
+                        "render": function (data){
+                            var nameWithID = data.split("+");
+                            var docID = nameWithID[0];
+                            var name = nameWithID[1];
+
+                            return '<a href="episodes.html?docID='+docID+'">'+name+'</a>';
+                        }
+                    },
                     {'data':'year'},
                     {'data':'seasons'},
                     {'data':'status'},

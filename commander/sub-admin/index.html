@@ -210,7 +210,7 @@
 <div class="d-flex flex-row">
 <div class="col-3 align-self-center">
 <div class="round ">
-<i class="mdi mdi-account-box"></i>
+<i class="mdi mdi-bug"></i>
 </div>
 </div>
 <div class="col-10 align-self-center text-center">
@@ -218,7 +218,7 @@
 <h5 class="mt-0 round-inner" id="users">
 0
 </h5>
-<p class="mb-0 text-muted">Users</p>
+<p class="mb-0 text-muted">Reports</p>
 </div>
 </div>
 </div>
@@ -370,7 +370,7 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
             document.getElementById('movies').innerHTML = snapshot.size;
         });
 
-        db.collection("users").get().then(function(snapshot){
+        db.collection("reports").get().then(function(snapshot){
             document.getElementById('users').innerHTML = snapshot.size;
         });
 

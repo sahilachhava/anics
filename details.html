@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.png">
+    <meta name="robots" content="noindex">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
@@ -128,36 +129,38 @@
                 <div class="movietitle">
                     <h4 style="font-weight: 700;" id="showName"></h4>
                 </div>
-                <div class="description" id="showSummary">
-                </div>
                 <div class="castinformation">
-                    <div style="float: left;">
-                        <p id="showType"></p>
-                        <p id="showYear"></p>
-                    </div>
-                    <div style="float: right;">
-                        <p id="showSeason"></p>
-                        <p id="showStatus"></p>
-                    </div>
+                    <p>
+                        <span id="showType"></span> 
+                        <span class="seperator"></span> 
+                        <span id="showYear"></span>
+                        <span class="seperator"></span> 
+                        <span id="showStatus"></span>
+                        <span class="seperator"></span> 
+                        <span id="showSeason"></span>
+                    </p>
                 </div>
+                <div class="description" id="showSummary">
+                    </div>
+    
                 <div class="actions d-flex flex-start flex-middle">
+                    <span class="playMsg" hidden>Play Now</span>
                     <a class="link-item" id="mainPlayBtn">
-                        <i class="fa fa-play"></i>
-                        <span>Play</span>
+                        <i class="fa fa-play-circle"></i>
                     </a>
+
+                    <span class="addListMsg" hidden>Add to My List</span>
                     <a id="addBtn" onclick="myListTrigger('add');" class="link-item">
-                        <i class="fa fa-plus"></i>
-                        <span>Add to My List</span>
+                        <i class="fa fa-plus-circle"></i>
                     </a>
+
+                    <span class="removeListMsg" hidden>Remove from My List</span>
                     <a id="removeBtn" onclick="myListTrigger('remove');" class="link-item" hidden>
                         <i class="fa fa-minus-circle"></i>
-                        <span>Remove from My List</span>
                     </a>
                 </div>
             </div>
-            <div class="moviePoster">
-                <img id="showPoster" alt="poster">
-            </div>
+           
         </section>
 
         <section class="episodeLists">
@@ -199,6 +202,14 @@
     <script src="commander/assets/firebase.js"></script>
 </body>
 <script>
+
+    $(document).ready(function () {  
+        setTimeout(()=>{
+            $('.preloaderBody').css('display', 'none');
+            $('.mainBody').removeAttr('hidden');
+        }, 2000);
+    });
+
     const userID = localStorage.getItem("userUID");
     const loginStatus = localStorage.getItem("loginStatus");
     const currentProfile = localStorage.getItem("userProfile");
@@ -242,12 +253,16 @@
             var data = doc.data();
             $('#showSummary').text(data.summary);
             if(data.mediaType == "anime"){
-                $('#showType').html("<span class='name'>Type:</span> Anime");
-                $('#showSeason').html("<span class='name'>Season:</span> "+data.seasons);
+                $('#showType').text("Anime");
+                if(data.seasons > 1){
+                    $('#showSeason').text(data.seasons + " Seasons");
+                }else{
+                    $('#showSeason').text(data.seasons + " Season");
+                }
                 for(var cntr = 1; cntr <= data.seasons; cntr++){
                     $('#seasonList').append('<option value="season'+cntr+'">Season '+cntr+'</option>');
                 }
-                $('#showStatus').html("<span class='name'>Status:</span> "+data.status);
+                $('#showStatus').text(data.status);
 
                 await doc.ref.collection("season1").orderBy("name").get().then((docSnap)=>{
                     var subbedEpisodes = [];
@@ -259,9 +274,9 @@
                             $('#dubbedSection').append(
                                 '<div class="episode">'+
                                     '<h4 class="playIcon" onclick="playNow('+count+', `dub`);">'+
-                                        '<i class="fa fa-play"></i>'+
+                                        '<i class="fa fa-play-circle"></i>'+
                                     '</h4>'+
-                                    '<h4 class="episodeTitle">'+
+                                    '<h4 class="episodeTitle" onclick="playNow('+count+', `dub`);">'+
                                         epData.name+
                                     '</h4>'+
                                 '</div>'
@@ -272,9 +287,9 @@
                             $('#subbedSection').append(
                                 '<div class="episode">'+
                                     '<h4 class="playIcon" onclick="playNow('+count+',  `sub`);">'+
-                                        '<i class="fa fa-play"></i>'+
+                                        '<i class="fa fa-play-circle"></i>'+
                                     '</h4>'+
-                                    '<h4 class="episodeTitle">'+
+                                    '<h4 class="episodeTitle" onclick="playNow('+count+', `sub`);">'+
                                         epData.name+
                                     '</h4>'+
                                 '</div>'
@@ -287,10 +302,10 @@
                     localStorage.setItem('dubbedEpisodes', dubbedEpisodes);
                 });
             }else{
-                $('#showType').html("<span class='name'>Type:</span> Movie");
-                $('#showSeason').html("<span class='name'>Duration:</span> "+data.duration);
+                $('#showType').text("Movie");
+                $('#showSeason').text(data.duration);
                 $('.seasonDropdown').attr('hidden','true');
-                $('#showStatus').html("<span class='name'>Status:</span> Released");
+                $('#showStatus').text("Released");
 
                 var subbedEpisodes = [];
                 var dubbedEpisodes = [];
@@ -298,9 +313,9 @@
                     $('#dubbedSection').append(
                         '<div class="episode">'+
                             '<h4 class="playIcon" onclick="playNow(0, `dub`);">'+
-                                '<i class="fa fa-play"></i>'+
+                                '<i class="fa fa-play-circle"></i>'+
                             '</h4>'+
-                            '<h4 class="episodeTitle">'+
+                            '<h4 class="episodeTitle" onclick="playNow(0, `dub`);">'+
                                 data.name + " (Dub)" +
                             '</h4>'+
                         '</div>'
@@ -311,9 +326,9 @@
                     $('#subbedSection').append(
                         '<div class="episode">'+
                             '<h4 class="playIcon" onclick="playNow(0,  `sub`);">'+
-                                '<i class="fa fa-play"></i>'+
+                                '<i class="fa fa-play-circle"></i>'+
                             '</h4>'+
-                            '<h4 class="episodeTitle">'+
+                            '<h4 class="episodeTitle" onclick="playNow(0, `sub`);">'+
                                 data.name + " (Sub)" +
                             '</h4>'+
                         '</div>'
@@ -323,7 +338,7 @@
                 localStorage.setItem('subbedEpisodes', subbedEpisodes);
                 localStorage.setItem('dubbedEpisodes', dubbedEpisodes);
             }
-            $('#showYear').html("<span class='name'>Released:</span> "+data.year);
+            $('#showYear').text(data.year);
             $('#showPoster').attr('src', data.posterURL);
             $('#showName').text(data.name);
         });
@@ -356,9 +371,9 @@
                     $('#dubbedSection').append(
                         '<div class="episode">'+
                             '<h4 class="playIcon" onclick="playNow('+count+', `dub`);">'+
-                                '<i class="fa fa-play"></i>'+
+                                '<i class="fa fa-play-circle"></i>'+
                             '</h4>'+
-                            '<h4 class="episodeTitle">'+
+                            '<h4 class="episodeTitle" onclick="playNow('+count+', `dub`);">'+
                                 epData.name+
                             '</h4>'+
                         '</div>'
@@ -369,9 +384,9 @@
                     $('#subbedSection').append(
                         '<div class="episode">'+
                             '<h4 class="playIcon" onclick="playNow('+count+',  `sub`);">'+
-                                '<i class="fa fa-play"></i>'+
+                                '<i class="fa fa-play-circle"></i>'+
                             '</h4>'+
-                            '<h4 class="episodeTitle">'+
+                            '<h4 class="episodeTitle" onclick="playNow('+count+', `sub`);">'+
                                 epData.name+
                             '</h4>'+
                         '</div>'
@@ -486,5 +501,24 @@
             $('#mainPlayBtn').attr('onclick', 'playNow(0,  "sub");');
         }
     }
+
+    $('#mainPlayBtn').mouseover(()=>{
+        $('.playMsg').removeAttr('hidden');
+    });
+    $('#mainPlayBtn').mouseout(()=>{
+        $('.playMsg').attr('hidden', 'true');
+    });
+    $('#addBtn').mouseover(()=>{
+        $('.addListMsg').removeAttr('hidden');
+    });
+    $('#addBtn').mouseout(()=>{
+        $('.addListMsg').attr('hidden', 'true');
+    });
+    $('#removeBtn').mouseover(()=>{
+        $('.removeListMsg').removeAttr('hidden');
+    });
+    $('#removeBtn').mouseout(()=>{
+        $('.removeListMsg').attr('hidden', 'true');
+    });
 </script>
 </html>

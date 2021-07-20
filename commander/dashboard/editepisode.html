@@ -161,7 +161,7 @@
 <div class="row">
 <div class="col-sm-12">
 <div class="page-title-box">
-<h4 class="page-title">Update Anime</h4>
+<h4 class="page-title">Update Episode</h4>
 </div>
 </div>
 </div>
@@ -172,53 +172,40 @@
 <div class="card m-b-30">
 <div class="card-body">
 <h4 class="mt-0 header-title">Fill out the form</h4><br>			
-<form onsubmit="updateAnime();return false;">
+<form onsubmit="updateEpisode();return false;">
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Name</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Anime Name</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" name="name" placeholder="Anime Name" value="" id="name" required>
-</div>
-</div>
-
-<div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Year</label>
-<div class="col-sm-6">
-<input class="form-control" type="text" name="year" placeholder="Anime Released Year" value="" id="year" required>
+<input class="form-control" type="text" placeholder="Anime Name" value="" id="animeList" required disabled>
 </div>
 </div>
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Seasons</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Season Name</label>
 <div class="col-sm-6">
-<input class="form-control" type="text" name="season" placeholder="Total seasons" value="" id="season" required>
+<input class="form-control" type="text" placeholder="Season" value="" id="seasonList" required disabled>
 </div>
 </div>
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Summary</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Episode Name</label>
 <div class="col-sm-6">
-<textarea class="form-control" type="text" placeholder="Summary about anime" rows="5" value="" id="summary" required>
-</textarea>
+<input class="form-control" type="text" placeholder="Episode Name" value="" id="name" required>
 </div>
 </div>
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Status</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Sub URL</label>
 <div class="col-sm-6">
-<select class="form-control" id="currentStatus" required>
-    <option value="">Select Status</option>
-    <option value="Ongoing">Ongoing</option>
-    <option value="Completed">Completed</option>
-    <option value="Upcoming">Upcoming</option>
-</select>
+<input class="form-control" type="text" placeholder="Sub Episode URL" value="" id="sub" required>
 </div>
 </div>
 
 <div class="form-group row">
-<label for="example-text-input" class="col-sm-2 col-form-label">Poster</label>
+<label for="example-text-input" class="col-sm-2 col-form-label">Dub URL</label>
 <div class="col-sm-6">
-<input id="poster" type="file" accept="image/x-png,image/png,image/jpeg,image/webp,image/webp">
+<input class="form-control" type="text" placeholder="Dub Episode URL" value="" id="dub" required>
 </div>
 </div>
 
@@ -228,7 +215,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<button type="submit" id="submitBtn" class="btn btn-primary waves-effect waves-light">Update Anime</button>
+<button type="submit" id="submitBtn" class="btn btn-primary waves-effect waves-light">Update Episode</button>
 <button type="reset" class="btn btn-secondary waves-effect m-l-5">Reset Form</button>
 </div>
 </div>
@@ -343,81 +330,42 @@ $("#boxscroll2").niceScroll({cursorborder:"",cursorcolor:"#cecece",boxzoom:true}
 	//loadFooter();
 
     var uid = sessionStorage.getItem("adminUID");
-
-    $('#name').attr('disabled', 'disabled');
-    $('#year').attr('disabled', 'disabled');
-    $('#seasons').attr('disabled', 'disabled');
-    $('#currentStatus').attr('disabled', 'disabled');
-    $('#summary').attr('disabled', 'disabled');
-
     if(uid==null){
         window.location.href="../index.html";
     }else{
         var docID = getUrlParameter('docID');
-        db.collection('medias').doc(docID).get().then(function(doc){
+        var showID = getUrlParameter('showID');
+        var season = getUrlParameter('season');
+        db.collection("medias").doc(showID).get().then((doc)=>{
             var data = doc.data();
-            document.getElementById('name').value = data.name;
-            document.getElementById('year').value = data.year;
-            document.getElementById('season').value = data.seasons;
-            document.getElementById('currentStatus').value = data.status;
-            document.getElementById('summary').value = data.summary;
-        }).then(()=>{
-            $('#name').removeAttr('disabled');
-            $('#year').removeAttr('disabled');
-            $('#season').removeAttr('disabled');
-            $('#currentStatus').removeAttr('disabled');
-            $('#summary').removeAttr('disabled');
-        });
+            $("#animeList").val(data.name);
+            $("#seasonList").val(season);
+            doc.ref.collection(season).doc(docID).get().then((ep)=>{
+                document.getElementById('name').value = ep.data().name;
+                document.getElementById('sub').value = ep.data().subbedURL;
+                document.getElementById('dub').value = ep.data().dubbedURL;
+            });
+        })
     }
 
-    async function updateAnime(){
-        $('#submitBtn').html('Updating Anime...').addClass('disabled');
+    function updateEpisode(){
+        $('#submitBtn').html('Updating Episode...').addClass('disabled');
 
-        var docID = getUrlParameter('docID');
+        var docID = getUrlParameter('showID');
+        var season = getUrlParameter('season');
     	var name = document.getElementById('name').value;
-        var year = document.getElementById('year').value;
-        var totalSeasons = document.getElementById('season').value;
-        var currentStatus = document.getElementById('currentStatus').value;
-        var summary = document.getElementById('summary').value;
-        var timeStamp = firebase.firestore.Timestamp.now().toDate();
-        var poster = document.getElementById('poster').files[0];
+        var subURL = document.getElementById('sub').value;
+        var dubURL = document.getElementById('dub').value;
 
-        if(poster){
-            var fileExtension = poster.name.split('.')[1];
-
-            await db.collection("medias").doc(docID).update({
-                'name': name,
-                'year': year,
-                'status': currentStatus,
-                'seasons': totalSeasons,
-                'summary': summary,
-                'lastModified': timeStamp,
-            })
-            .then(async function(doc){
-                await storage.ref('mediaPosters/'+docID+'/poster.'+fileExtension).put(poster);
-                await storage.ref('mediaPosters/'+docID+'/poster.'+fileExtension).getDownloadURL().then(async function(posterURL){
-                    await db.collection("medias").doc(docID).update({
-                        'posterURL': posterURL,
-                    });
-                });
-
-                alert("Anime Updated");
-                window.location.href="anime.html";
-            });
-        }else{
-            await db.collection("medias").doc(docID).update({
-                'name': name,
-                'year': year,
-                'status': currentStatus,
-                'seasons': totalSeasons,
-                'summary': summary,
-                'lastModified': timeStamp,
-            })
-            .then(function(){
-                alert("Anime Updated");
-                window.location.href="anime.html";
-            });
-        }
+    	db.collection("medias").doc(docID).collection(season).doc(name).update({
+    		'name': name,
+            'subbedURL': subURL,
+            'dubbedURL': dubURL
+    	})
+    	.then(()=>{
+            alert("Episode Updated");
+            window.location.href= "episodes.html?docID="+docID;
+    	});
     }
 </script>
 </html>

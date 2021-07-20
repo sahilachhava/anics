@@ -1,10 +1,12 @@
+.detailMainWrapper {
+    padding-left: 40px;
+    padding-right: 40px;
+}
 .informationSection {
     padding-top: 75px;
 }
 .movieinformation{
     margin-left: 50px;
-    max-width: 550px;
-    float: left;
 }
 .movieinformation .movietitle h4 {
     color: #fff;
@@ -12,64 +14,73 @@
     margin-top: 30px;
 }
 .description{
+    padding-right: 40px;
     text-align: justify;
     margin-top: 30px;
     font-size: 20px;
-    width: 525px;
-    max-height: 240px;
     overflow: hidden;
     color: rgba(255, 255, 255, 0.89);
 }
 .castinformation{
-    margin-top: 20px;
+    margin-top: 30px;
 }
-.castinformation p{
-    margin-top: 10px;
-    font-size: 16px;
-    color: rgb(221, 221, 221);
-}
-.castinformation span{
-    font-weight: bold;
-    color: rgb(241, 240, 240);
+.seperator {
+    border-left: 1px solid white;
+    height: 2px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .actions{
-    margin-top: 125px;
+    margin-top: 50px;
 }
 .actions a{
     font-weight: 500;
-    color: white;
+    color: #fff;
     text-align: center;
-    font-size: 16px;
-    margin-right: 25px;
-    background-color: #425265;
-    border-radius: 5px;
+    font-size: 22px;
+    margin-right: 40px;
+    background-color: #e50914;
+    border-radius: 50%;
     padding: 15px;
     cursor: pointer;
+}
+.playMsg {
+    position: absolute;
+    font-size: 1em;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 95px;
+}
+.addListMsg {
+    position: absolute;
+    font-size: 1em;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 95px;
+    margin-left: 70px;
+}
+.removeListMsg {
+    position: absolute;
+    font-size: 1em;
+    font-weight: 700;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 95px;
+    margin-left: 50px;
 }
 .actions a i{
     float: left;
     font-size: 25px;
 }
-.actions a span{
-    float: right;
-    margin-left: 10px;
-}
-
-.moviePoster {
-    padding-right: 30px;
-    padding-top: 25px;
-    float: right;
-}
-.moviePoster img{
-    border-radius: 15px;
-    height: 500px;
-    width: 800px;
-}
 
 .episodeLists {
     display: block;
-    padding: 600px 40px 50px 40px;
+    margin-top: 50px;
+    padding-left: 40px;
+    padding-right: 40px;
 }
 .mainHeading {
     margin-left: 5px;
@@ -122,25 +133,21 @@
     padding-top: 15px;
     margin-bottom: 15px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px 0 #fff;
-    transition: 0.3s;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 .episode .playIcon {
     float: left;
     padding-left: 15px;
+    padding-right: 15px;
     cursor: pointer;
 }
 .episode .playIcon i {
-    font-size: 18px;
-    height: 35px;
-    width: 35px;
-    border: 2px solid white;
-    border-radius: 50%;
-    padding: 7px 0px 0px 10px;
+    font-size: 32px;
 }
 .episode .episodeTitle {
     float: center;
-    font-size: 18px;
-    margin-left: 60px;
-    margin-top: 8px;
+    margin-top: 5px;
+    font-size: 20px;
+    cursor: pointer;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }

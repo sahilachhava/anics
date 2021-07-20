@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.png">
+    <meta name="robots" content="noindex">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
@@ -122,12 +123,10 @@
         </nav>
     </header>
 
-    <div class="single-page-black-background">
-
         <!-- anime on anics -->
         <section id="mylist" class="listContainer" style="padding-top: 120px;">
             <h4 class="mylist-heading" style="margin-left: 20px;">
-                Latest Anime
+                New Anime
             </h4>
             <div class="row">
                 <div class="single-page-row-inner" id="latestAnimeListData">
@@ -137,22 +136,7 @@
         </section>
         <!-- anime end -->
 
-        <!-- anime on anics -->
-        <section id="mylist" class="listContainer" style="padding-top: 10px;">
-            <h4 class="mylist-heading" style="margin-left: 20px;">
-                All Anime
-            </h4>
-            <div class="row">
-                <div class="single-page-row-inner" id="animeListData">
-                    <!-- Data will be append here -->
-                </div>
-            </div>
-        </section>
-        <!-- anime end -->
-
     </div>
-    </div>
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
@@ -193,41 +177,12 @@
             })
         });
 
-        db.collection("medias").orderBy("timeStamp", "desc").limit(8).get().then((snapShot)=>{
+        db.collection("medias").orderBy("timeStamp", "desc").get().then((snapShot)=>{
             snapShot.forEach((doc)=>{
                 var data = doc.data();
                 if(data.mediaType == "anime"){
                     $('#latestAnimeListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
-                            '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                            '</video>'+
-                            '<div class="video-description d-flex flex-end direction-column">'+
-                                '<div class="play-button">'+
-                                    '<svg viewBox="0 0 24 24">'+
-                                        '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
-                                    '</svg>'+
-                                '</div>'+
-                                '<div>'+
-                                    '<h4 class="heading text-shadow">'+
-                                        data.name+
-                                    '</h4>'+
-                                '</div>'+
-                                '<div class="info d-flex flex-middle flex-no-wrap">'+
-                                    '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
-                                '</div>'+
-                            '</div>'+
-                        '</div>'
-                    );
-                }
-            })
-        });
-
-        db.collection("medias").get().then((snapShot)=>{
-            snapShot.forEach((doc)=>{
-                var data = doc.data();
-                if(data.mediaType == "anime"){
-                    $('#animeListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="width: 300px; height: 200px; margin: 15px;">'+
+                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);" style="margin: 15px;">'+
                             '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
                             '</video>'+
                             '<div class="video-description d-flex flex-end direction-column">'+

@@ -5,29 +5,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.png">
+    <meta name="robots" content="noindex">
     <script src="https://kit.fontawesome.com/55da9ebea0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/landingPage.css">
     <title>Anics - Watch Anime & Movies Online</title>
 </head>
 
 <body>
-    <header class="showcase">
-        <div class="showcase-top">
-            <img src="img/logo.png" alt="Anics">
-            <a href="login.html" class="btn btn-rounded">Sign In</a>
-        </div>
-        <div class="showcase-content">
-            <h1>See what's next</h1>
-            <p>Watch anywhere. Cancel anytime.</p>
-            <a href="register.html" class="btn btn-xl">
-                Watch Anime & Movies, Join Now <i class="fas fa-chevron-right btn-icon"></i>
-            </a>
-        </div>
-    </header>
+    <div class="preloader">
+        <div class="loading"></div>
+    </div>
+    <div class="mainBody" hidden>
+        <header class="showcase">
+            <div class="showcase-top">
+                <img src="img/logo.png" alt="Anics">
+                <a href="login.html" class="btn btn-rounded">Sign In</a>
+            </div>
+            <div class="showcase-content">
+                <h1>See what's next</h1>
+                <p>Watch anywhere. Cancel anytime.</p>
+                <a href="register.html" class="btn btn-xl">
+                    Watch Anime & Movies, Join Now <i class="fas fa-chevron-right btn-icon"></i>
+                </a>
+            </div>
+        </header>
 
-    <div class="bottom">
-        <div class="bottom-width">
-            
+        <div class="bottom">
+            <div class="bottom-width">
+                
+            </div>
         </div>
     </div>
 
@@ -50,6 +56,11 @@
                 }
             })
         }
+
+        setTimeout(()=>{
+            $('.preloader').attr('hidden', 'true');
+            $('.mainBody').removeAttr('hidden');
+        }, 300);
     });
 </script>
 </html>

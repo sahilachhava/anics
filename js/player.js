@@ -141,7 +141,9 @@ video.addEventListener('timeupdate', () => {
   let minutes = (time.getUTCMinutes().toString()).padStart('2', '0');
   let seconds = (time.getUTCSeconds().toString()).padStart('2', '0');
 
-  timeLeft.textContent = `${hours ? hours : '00'}:${minutes}:${seconds}`;
+  if(video.currentTime > 0){
+    timeLeft.textContent = `${hours ? hours : '00'}:${minutes}:${seconds}`;
+  }
 });
 
 progressBar.addEventListener('click', (event) => {
