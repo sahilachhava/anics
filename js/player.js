@@ -63,7 +63,11 @@ const toggleMute = () => {
 const toggleFullScreen = () => {
   if (!document.fullscreenElement) {
     videoContainer.requestFullscreen();
+    $('.back-button').css('bottom', '700px');
+    $('.videoLoader').css('bottom', '45%');
   } else {
+    $('.back-button').css('bottom', '650px');
+    $('.videoLoader').css('bottom', '47%');
     document.exitFullscreen();
   }
 };
@@ -96,20 +100,32 @@ document.addEventListener('keyup', (event) => {
     if (event.code === 'ArrowUp') {
         if(video.volume != 1 && video.volume > 0.7){
             video.volume = 1;
+            $('#volIcon').attr('src', 'img/icons/volumeFull.png');
         }else if(video.volume < 0.8){
             video.volume += 0.2;
+            $('#volIcon').attr('src', 'img/icons/volumeLow.png');
             fullVolumeButton.style.display = '';
             mutedButton.style.display = 'none';
         } 
+        $('.volumeChange').css('display', 'block');
+        setTimeout(()=>{
+          $('.volumeChange').css('display', 'none');
+        }, 150);
     }
     if (event.code === 'ArrowDown') {
         if(video.volume != 0 && video.volume < 0.3){
             video.volume = 0.0;
             fullVolumeButton.style.display = 'none';
             mutedButton.style.display = '';
+            $('#volIcon').attr('src', 'img/icons/mute.png');
         }else if(video.volume > 0.2){
             video.volume -= 0.2;
+            $('#volIcon').attr('src', 'img/icons/volumeLow.png');
         }
+        $('.volumeChange').css('display', 'block');
+        setTimeout(()=>{
+          $('.volumeChange').css('display', 'none');
+        }, 150);
     }
     if (event.code === 'KeyM') {
         toggleMute();
@@ -143,6 +159,11 @@ video.addEventListener('timeupdate', () => {
 
   if(video.currentTime > 0){
     timeLeft.textContent = `${hours ? hours : '00'}:${minutes}:${seconds}`;
+  }
+  if(video.networkState === video.NETWORK_LOADING){
+    $('.videoLoader').css('display', 'block');
+  }else{
+    $('.videoLoader').css('display', 'none');
   }
 });
 

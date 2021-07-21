@@ -6,16 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.png">
     <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=1440">
     <script src="https://kit.fontawesome.com/55da9ebea0.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/landingPage.css">
     <title>Anics - Watch Anime & Movies Online</title>
 </head>
-
 <body>
-    <div class="preloader">
-        <div class="loading"></div>
-    </div>
-    <div class="mainBody" hidden>
         <header class="showcase">
             <div class="showcase-top">
                 <img src="img/logo.png" alt="Anics">
@@ -35,7 +31,6 @@
                 
             </div>
         </div>
-    </div>
 
     <script src="js/landingPage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -56,11 +51,6 @@
                 }
             })
         }
-
-        setTimeout(()=>{
-            $('.preloader').attr('hidden', 'true');
-            $('.mainBody').removeAttr('hidden');
-        }, 300);
     });
 </script>
 </html>

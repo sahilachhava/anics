@@ -111,7 +111,7 @@ body{background: #141414 !important;color: #ffffff !important;}
   position: absolute;
   content: "";
   top: -20px;
-  right: 0px;
+  right: 0;
   width: 100%;
   height: 22px;
   background-color: #ffffff00;

@@ -23,7 +23,7 @@ align-items: center;
 .video-container .back-button{
     position: absolute;
     left: 50px;
-    bottom: 675px;
+    bottom: 650px;
     cursor: pointer;
 }
 .video-container .back-button i{
@@ -79,6 +79,30 @@ background: #5B5B5B;
 display: flex;
 align-items: center;
 cursor: pointer;
+}
+
+.videoLoader {
+    display: none;
+    position: absolute;
+    left: 43%;
+    bottom: 45%;
+}
+
+.videoLoader svg {
+    width: 150px;
+    height: 150px;
+}
+
+.volumeChange {
+    display: none;
+    position: absolute;
+    left: 44%;
+    bottom: 47%;
+}
+
+.volumeChange img {
+    width: 100px;
+    height: 100px;
 }
 
 .elapsed-time {

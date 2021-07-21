@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="img/favicon.png">
     <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=1440">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.0/font/bootstrap-icons.css">
@@ -452,63 +453,68 @@
             }
         });
 
-        //List Fillup Code
-        db.collection("medias").get().then((snapShot)=>{
+        //Anime List Fillup
+        db.collection("medias").where("mediaType", "==", "anime").orderBy("timeStamp", "desc").limit(10).get().then((snapShot)=>{
             var animeCount = 0;
-            var movieCount = 0;
             snapShot.forEach((doc)=>{
                 var data = doc.data();
-                if(data.mediaType == "anime"){
-                    animeCount++;
-                    $('#animeListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
-                            '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                            '</video>'+
-                            '<div class="video-description d-flex flex-end direction-column">'+
-                                '<div class="play-button">'+
-                                    '<svg viewBox="0 0 24 24">'+
-                                        '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
-                                    '</svg>'+
-                                '</div>'+
-                                '<div>'+
-                                    '<h4 class="heading text-shadow">'+
-                                        data.name+
-                                    '</h4>'+
-                                '</div>'+
-                                '<div class="info d-flex flex-middle flex-no-wrap">'+
-                                    '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
-                                '</div>'+
+                animeCount++;
+                $('#animeListData').append(
+                    '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
+                        '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
+                        '</video>'+
+                        '<div class="video-description d-flex flex-end direction-column">'+
+                            '<div class="play-button">'+
+                                '<svg viewBox="0 0 24 24">'+
+                                    '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
+                                '</svg>'+
                             '</div>'+
-                        '</div>'
-                    );
-                }else{
-                    movieCount++;
-                    $('#movieListData').append(
-                        '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
-                            '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
-                            '</video>'+
-                            '<div class="video-description d-flex flex-end direction-column">'+
-                                '<div class="play-button">'+
-                                    '<svg viewBox="0 0 24 24">'+
-                                        '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
-                                    '</svg>'+
-                                '</div>'+
-                                '<div>'+
-                                    '<h4 class="heading text-shadow">'+
-                                        data.name+
-                                    '</h4>'+
-                                '</div>'+
-                                '<div class="info d-flex flex-middle flex-no-wrap">'+
-                                    '<p class="season-count text-shadow">Movie</p>'+
-                                '</div>'+
+                            '<div>'+
+                                '<h4 class="heading text-shadow">'+
+                                    data.name+
+                                '</h4>'+
                             '</div>'+
-                        '</div>'
-                    );
-                }
+                            '<div class="info d-flex flex-middle flex-no-wrap">'+
+                                '<p class="season-count text-shadow">'+data.seasons+' Seasons</p>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'
+                );
             });
             if(animeCount >= 6){
                 $('#animeListData').addClass('owl-carousel');
             }
+            console.log("anime");
+        });
+
+        //Movies List Fillup
+        db.collection("medias").where("mediaType", "==", "movie").orderBy("timeStamp", "desc").limit(10).get().then((snapShot)=>{
+            var movieCount = 0;
+            snapShot.forEach((doc)=>{
+                var data = doc.data();
+                movieCount++;
+                $('#movieListData').append(
+                    '<div class="video card" onclick="showDetails(`'+doc.id+'`);">'+
+                        '<video muted class="card_item mylist-img video-item" poster="'+data.posterURL+'">'+
+                        '</video>'+
+                        '<div class="video-description d-flex flex-end direction-column">'+
+                            '<div class="play-button">'+
+                                '<svg viewBox="0 0 24 24">'+
+                                    '<path d="M6 4l15 8-15 8z" fill="black"></path>'+
+                                '</svg>'+
+                            '</div>'+
+                            '<div>'+
+                                '<h4 class="heading text-shadow">'+
+                                    data.name+
+                                '</h4>'+
+                            '</div>'+
+                            '<div class="info d-flex flex-middle flex-no-wrap">'+
+                                '<p class="season-count text-shadow">Movie</p>'+
+                            '</div>'+
+                        '</div>'+
+                    '</div>'
+                );
+            });
             if(movieCount >= 6){
                 $('#movieListData').addClass('owl-carousel');
             }
@@ -529,6 +535,7 @@
                     }
                 }
             });
+            console.log("movie");
         });
     }
 
